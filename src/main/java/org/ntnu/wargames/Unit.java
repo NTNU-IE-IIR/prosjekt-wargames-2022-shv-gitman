@@ -80,12 +80,11 @@ public abstract class Unit {
      */
     @Override
     public String toString() {
-        return "Unit{" +
-                "name='" + name + '\'' +
-                ", health=" + health +
-                ", attack=" + attack +
-                ", armor=" + armor +
-                '}';
+        return "Unit: " +
+                "name = " + name +
+                ", health = " + health +
+                ", attack = " + attack +
+                ", armor = " + armor;
     }
 
     /**

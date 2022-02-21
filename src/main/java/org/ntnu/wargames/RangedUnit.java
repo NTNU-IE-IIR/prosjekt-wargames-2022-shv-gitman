@@ -41,6 +41,6 @@ public class RangedUnit extends Unit{
     @Override
     public int getResistBonus() {
         // Returns 6 first time it gets attacked, then 4, and then 2 for the rest of the match.
-        return 6;
+        return 2;
     }
 }
