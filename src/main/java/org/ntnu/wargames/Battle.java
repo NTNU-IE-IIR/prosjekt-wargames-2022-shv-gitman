@@ -15,11 +15,53 @@ public class Battle {
         this.armyTwo = armyTwo;
     }
 
-    public Battle simulate() {
+    /**
+     * Simulates a battle between two armies.
+     *
+     * @return the winner of the battle?
+     */
+    public Army simulate() {
         addArmy_One();
         addArmy_Two();
-        Battle battle = new Battle(this.armyOne, this.armyTwo);
-        return battle;
+
+        // Army one attacks first.
+        int attackTurn = 0;
+        Unit attackerUnit = armyOne.getRandom();
+        Unit defenderUnit = armyTwo.getRandom();
+
+        while(armyOne.hasUnits() && armyTwo.hasUnits()) {
+
+            // Changes which army attacks each turn.
+            if (attackTurn % 2 == 0) {
+                attackerUnit = armyOne.getRandom();
+                defenderUnit = armyTwo.getRandom();
+            } else {
+                attackerUnit = armyTwo.getRandom();
+                defenderUnit = armyOne.getRandom();
+            }
+
+            // Attacker unit attacks defender unit.
+            attackerUnit.attack(defenderUnit);
+
+            //TODO: Attackbonus and defencebonus.
+
+            // If health of defender gets below 0, it dies.
+            if (defenderUnit.getHealth() <= 0) {
+                if (attackTurn % 2 == 0) {
+                    armyTwo.remove(defenderUnit);
+                } else {
+                    armyOne.remove(defenderUnit);
+                }
+            }
+            attackTurn++;
+        }
+
+        // Returns which army still has units.
+        if (armyTwo.hasUnits()) {
+            return armyTwo;
+        } else {
+            return armyOne;
+        }
     }
 
     /**

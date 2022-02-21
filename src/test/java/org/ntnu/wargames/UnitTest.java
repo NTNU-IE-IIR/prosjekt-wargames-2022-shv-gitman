@@ -2,7 +2,7 @@ package org.ntnu.wargames;
 
 import org.junit.Test;
 
-import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.*;
 
 public class UnitTest {
 
@@ -34,7 +34,7 @@ public class UnitTest {
         assertEquals(180,commanderUnit.getHealth());
         assertEquals(50,commanderUnit.getAttack());
         assertEquals(20,commanderUnit.getArmor());
-        assertEquals(4,commanderUnit.getAttackBonus());
+        assertEquals(2,commanderUnit.getAttackBonus());
         assertEquals(1,commanderUnit.getResistBonus());
     }
 
@@ -44,5 +44,28 @@ public class UnitTest {
 
         assertEquals(25,commanderUnit.getAttack());
         assertEquals(15,commanderUnit.getArmor());
+    }
+
+    @Test
+    public void add_Unit_To_Army() {
+        InfantryUnit infantryUnit = new InfantryUnit("Infantry",100);
+        Army army = new Army("Test army");
+
+        army.add(infantryUnit);
+
+        assertTrue(army.hasUnits());
+    }
+
+    @Test
+    public void remove_Unit_From_Army() {
+        InfantryUnit infantryUnit = new InfantryUnit("Infantry", 100);
+        Army army = new Army("Test army");
+
+        // Adds unit
+        army.add(infantryUnit);
+        // Removes unit
+        army.remove(infantryUnit);
+
+        assertFalse(army.hasUnits());
     }
 }
