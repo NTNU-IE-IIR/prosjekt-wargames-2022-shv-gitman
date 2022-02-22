@@ -15,14 +15,20 @@ public class Battle {
         this.armyTwo = armyTwo;
     }
 
+    public Battle() {
+        this.armyOne = new Army("Human army");
+        this.armyTwo = new Army("Orc Army");
+        simulate();
+    }
+
     /**
      * Simulates a battle between two armies.
-     *
-     * @return the winner of the battle?
+     * @return the winner of the battle with the remaining units.
      */
     public Army simulate() {
-        addArmy_One();
-        addArmy_Two();
+        // Template units for testing.
+        // addArmy_One();
+        // addArmy_Two();
 
         // Army one attacks first.
         int attackTurn = 0;
@@ -42,8 +48,6 @@ public class Battle {
 
             // Attacker unit attacks defender unit.
             attackerUnit.attack(defenderUnit);
-
-            //TODO: Attackbonus and defencebonus.
 
             // If health of defender gets below 0, it dies.
             if (defenderUnit.getHealth() <= 0) {
@@ -120,5 +124,9 @@ public class Battle {
         for(int i = 1; i <= 100; i++) {
             armyTwo.add(new CavalryUnit("Raider", 100));
         }
+    }
+
+    public static void main(String[] args) {
+        Battle battle = new Battle();
     }
 }

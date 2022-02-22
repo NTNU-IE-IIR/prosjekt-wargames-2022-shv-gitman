@@ -1,6 +1,7 @@
 package org.ntnu.wargames;
 
 public class CavalryUnit extends Unit{
+
     /**
      * Creates a cavalry unit.
      * @param name The name of the unit.
@@ -29,7 +30,6 @@ public class CavalryUnit extends Unit{
      */
     @Override
     public int getAttackBonus() {
-        // First attack is stronger (4 + 2) then 2.
         return 2;
     }
 

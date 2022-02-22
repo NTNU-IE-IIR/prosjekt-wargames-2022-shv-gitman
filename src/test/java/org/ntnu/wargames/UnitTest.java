@@ -68,4 +68,62 @@ public class UnitTest {
 
         assertFalse(army.hasUnits());
     }
+
+    @Test
+    public void test_First_Attack_Cavalry_Infantry() {
+        CavalryUnit cavalryUnit = new CavalryUnit("Cavalry",100);
+        InfantryUnit infantryUnit = new InfantryUnit("Infantry", 100);
+
+        cavalryUnit.attack(infantryUnit);
+
+        // Cavalry attack: 20 + 6 (first attack bonus)
+        // Infantry defence: 10 + 1 (resist bonus)
+        assertEquals(85,infantryUnit.getHealth());
+    }
+
+    @Test
+    public void test_Second_Attack_Cavalry_Infantry() {
+        CavalryUnit cavalryUnit = new CavalryUnit("Cavalry",100);
+        InfantryUnit infantryUnit = new InfantryUnit("Infantry", 100);
+
+        // First attack
+        // Cavalry attack: 20 + 6 (first attack bonus)
+        // Infantry defence: 10 + 1 (resist bonus)
+        // expected: 100 - 26 + 11 = 85
+        cavalryUnit.attack(infantryUnit);
+
+        // Second attack
+        // Cavalry attack: 20 + 2 (second attack bonus)
+        // Infantry defence: 10 + 1 (resist bonus)
+        // expected: 85 - 22 + 11 = 74
+        cavalryUnit.attack(infantryUnit);
+
+        assertEquals(74,infantryUnit.getHealth());
+    }
+
+    @Test
+    public void test_RangedUnit_ResistanceBonus() {
+        InfantryUnit infantryUnit = new InfantryUnit("Infantry", 100);
+        RangedUnit rangedUnit = new RangedUnit("Archer",100);
+
+        // First attack
+        // Infantry attack: 15 + 2 (attack bonus)
+        // Archer defence: 8 + 6 (resist bonus)
+        // expected: 100 - 17 + 14 = 97
+        infantryUnit.attack(rangedUnit);
+
+        // Second attack
+        // Infantry attack: 15 + 2 (attack bonus)
+        // Archer defence: 8 + 4 (resist bonus)
+        // expected: 100 - 17 + 12 = 92
+        infantryUnit.attack(rangedUnit);
+
+        // Third attack
+        // Infantry attack: 15 + 2 (attack bonus)
+        // Archer defence: 8 + 2 (resist bonus)
+        // expected: 100 - 17 + 10 = 85
+        infantryUnit.attack(rangedUnit);
+
+        assertEquals(85,rangedUnit.getHealth());
+    }
 }
