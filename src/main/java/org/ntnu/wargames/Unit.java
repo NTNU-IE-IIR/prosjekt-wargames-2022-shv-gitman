@@ -56,6 +56,8 @@ public abstract class Unit {
         this.increaseUnitAttackTurn();
         opponent.increaseUnitDefenceTurn();
 
+        // TODO: checks if attack is higher than defence.
+
         // Sets opponents new health.
         opponent.setHealth(
                 opponent.getHealth() -

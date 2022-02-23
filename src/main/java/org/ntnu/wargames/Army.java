@@ -32,7 +32,12 @@ public class Army {
      * @param unit the unit to be added.
      */
     public void add(Unit unit) {
+        if (unit == null) {
+            throw new IllegalArgumentException("Unit is empty");
+        }
         this.units.add(unit);
+        // TODO: check if unit is already in list.
+        // TODO: check if unit = null
     }
 
     /**
