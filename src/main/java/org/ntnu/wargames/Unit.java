@@ -7,7 +7,8 @@ public abstract class Unit {
     private int armor;
 
     // For simulering
-    private int unitTurn = 0;
+    private int unitAttackTurn = 0;
+    private int unitDefenceTurn = 0;
 
     /**
      * Creates a unit with a set of stats.
@@ -39,21 +40,21 @@ public abstract class Unit {
         int resistBonus = opponent.getResistBonus();
 
         // Checks if its CavalryUnits first attack and adds extra attackbonus.
-        if (this instanceof CavalryUnit && unitTurn == 0) {
+        if (this instanceof CavalryUnit && unitAttackTurn == 0) {
             attackBonus = attackBonus + 4;
-            unitTurn++;
         }
 
         // Checks if Ranged unit has been attacked before and adds resistance bonus.
         if (opponent instanceof RangedUnit) {
-            if (opponent.getUnitTurn() == 0) {
+            if (opponent.getUnitDefenceTurn() == 0) {
                 resistBonus = resistBonus + 4;
-                opponent.setUnitTurn(1);
-            } else if (opponent.getUnitTurn() == 1) {
+            } else if (opponent.getUnitDefenceTurn() == 1) {
                 resistBonus = resistBonus + 2;
-                opponent.setUnitTurn(2);
             }
         }
+
+        this.increaseUnitAttackTurn();
+        opponent.increaseUnitDefenceTurn();
 
         // Sets opponents new health.
         opponent.setHealth(
@@ -129,21 +130,32 @@ public abstract class Unit {
     public abstract int getResistBonus();
 
     /**
-     * Returns the amount of turns a unit has been in.
-     * Stops at 2 since its not relevant for this iteration.
-     * TODO: continuously add turns for each unit.
-     * @return the amount of turns a unit has been in.
+     * Returns the amount of times a unit has attacked.
+     * @return the amount of times a unit has attacked.
      */
-    public int getUnitTurn() {
-        return unitTurn;
+    public int getUnitAttackTurn() {
+        return unitAttackTurn;
     }
 
     /**
-     * Manually sets the current turn the unit is on.
-     * TODO: Delete in favor of a turn counter.
-     * @param value the current turn the unit is on.
+     * Returns the amount of times a unit has defended.
+     * @return the amount of times a unit has defended.
      */
-    public void setUnitTurn(int value) {
-        unitTurn = value;
+    public int getUnitDefenceTurn() {
+        return unitDefenceTurn;
+    }
+
+    /**
+     * Increases the amount of times a unit has attacked.
+     */
+    public void increaseUnitAttackTurn() {
+        unitAttackTurn++;
+    }
+
+    /**
+     * Increases the amount of times a unit has defended.
+     */
+    public void increaseUnitDefenceTurn() {
+        unitDefenceTurn++;
     }
 }

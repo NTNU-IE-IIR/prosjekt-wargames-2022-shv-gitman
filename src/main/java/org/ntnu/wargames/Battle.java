@@ -30,14 +30,14 @@ public class Battle {
         addArmy_Two();
 
         // Army one attacks first.
-        int attackTurn = 0;
+        int turn = 0;
         Unit attackerUnit = armyOne.getRandom();
         Unit defenderUnit = armyTwo.getRandom();
 
         while(armyOne.hasUnits() && armyTwo.hasUnits()) {
 
             // Changes which army attacks each turn.
-            if (attackTurn % 2 == 0) {
+            if (turn % 2 == 0) {
                 attackerUnit = armyOne.getRandom();
                 defenderUnit = armyTwo.getRandom();
             } else {
@@ -50,14 +50,16 @@ public class Battle {
 
             // If health of defender gets below 0, it dies.
             if (defenderUnit.getHealth() <= 0) {
-                if (attackTurn % 2 == 0) {
+                if (turn % 2 == 0) {
                     armyTwo.remove(defenderUnit);
                 } else {
                     armyOne.remove(defenderUnit);
                 }
             }
-            attackTurn++;
+            turn++;
         }
+
+        // System.out.println("Simulation took: " + turn + " turns.");
 
         // Returns which army still has units.
         if (armyTwo.hasUnits()) {
