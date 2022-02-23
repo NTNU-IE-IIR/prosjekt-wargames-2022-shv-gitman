@@ -117,14 +117,14 @@ public abstract class Unit {
     }
 
     /**
-     * Returns attack bonus of the unit.
-     * @return The attack bonus of the unit.
+     * Returns default attack bonus of the unit.
+     * @return The default attack bonus of the unit.
      */
     public abstract int getAttackBonus();
 
     /**
-     * Returns attack bonus of the unit.
-     * @return The attack bonus of the unit.
+     * Returns default resist bonus of the unit.
+     * @return The resist bonus of the unit.
      */
     public abstract int getResistBonus();
 

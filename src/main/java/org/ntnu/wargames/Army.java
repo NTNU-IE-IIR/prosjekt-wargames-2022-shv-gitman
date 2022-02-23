@@ -77,6 +77,14 @@ public class Army {
         return units.get(random.nextInt(units.size()));
     }
 
+    public int getAmountOfUnits() {
+        int size = 0;
+        for (int i = 0; i < units.size(); i++) {
+            size++;
+        }
+        return size;
+    }
+
     /**
      * Returns a string representing the whole army.
      * @return a string representing the whole army.
@@ -84,7 +92,7 @@ public class Army {
     @Override
     public String toString() {
         return "name='" + name + '\'' +
-                ", units=" + units;
+                ", units=" + getAmountOfUnits();
     }
 
     /**

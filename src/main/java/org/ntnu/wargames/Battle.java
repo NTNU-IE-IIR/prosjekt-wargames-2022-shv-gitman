@@ -18,7 +18,6 @@ public class Battle {
     public Battle() {
         this.armyOne = new Army("Human army");
         this.armyTwo = new Army("Orc Army");
-        simulate();
     }
 
     /**
@@ -27,8 +26,8 @@ public class Battle {
      */
     public Army simulate() {
         // Template units for testing.
-        // addArmy_One();
-        // addArmy_Two();
+        addArmy_One();
+        addArmy_Two();
 
         // Army one attacks first.
         int attackTurn = 0;
@@ -124,9 +123,5 @@ public class Battle {
         for(int i = 1; i <= 100; i++) {
             armyTwo.add(new CavalryUnit("Raider", 100));
         }
-    }
-
-    public static void main(String[] args) {
-        Battle battle = new Battle();
     }
 }

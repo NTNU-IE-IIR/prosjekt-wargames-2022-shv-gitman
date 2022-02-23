@@ -24,9 +24,8 @@ public class CavalryUnit extends Unit{
     }
 
     /**
-     * Returns the attack bonus for the unit.
-     * The first attack is stronger than the rest.
-     * @return the attack bonus for the unit.
+     * Returns the default attack bonus for the unit.
+     * @return the default attack bonus for the unit.
      */
     @Override
     public int getAttackBonus() {
@@ -34,8 +33,8 @@ public class CavalryUnit extends Unit{
     }
 
     /**
-     * Returns the resistance bonus for the unit.
-     * @return the resistance bonus for the unit.
+     * Returns the default resistance bonus for the unit.
+     * @return the default resistance bonus for the unit.
      */
     @Override
     public int getResistBonus() {

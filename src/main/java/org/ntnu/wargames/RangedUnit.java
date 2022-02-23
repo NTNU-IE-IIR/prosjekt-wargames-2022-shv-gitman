@@ -24,8 +24,8 @@ public class RangedUnit extends Unit{
     }
 
     /**
-     * Returns the resistance bonus for the unit.
-     * @return the resistance bonus for the unit.
+     * Returns the default attack bonus for the unit.
+     * @return the default attack bonus for the unit.
      */
     @Override
     public int getAttackBonus() {
@@ -33,14 +33,11 @@ public class RangedUnit extends Unit{
     }
 
     /**
-     * Returns the resistance bonus for the unit.
-     * The first and second resistance bonus is higher to
-     * represent distance.
-     * @return the resistance bonus for the unit.
+     * Returns the default resistance bonus for the unit.
+     * @return the default resistance bonus for the unit.
      */
     @Override
     public int getResistBonus() {
-        // Returns 6 first time it gets attacked, then 4, and then 2 for the rest of the match.
         return 2;
     }
 }

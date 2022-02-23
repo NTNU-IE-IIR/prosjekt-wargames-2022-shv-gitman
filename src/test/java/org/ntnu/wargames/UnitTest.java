@@ -19,7 +19,7 @@ public class UnitTest {
     }
 
     @Test
-    public void testPredefined_InfantryUnit_Creation() {
+    public void test_Predefined_InfantryUnit_Creation() {
         InfantryUnit infantryUnit = new InfantryUnit("Infantry",100);
 
         assertEquals(15,infantryUnit.getAttack());
@@ -39,34 +39,11 @@ public class UnitTest {
     }
 
     @Test
-    public void testPredefined_CommanderUnit_Creation() {
+    public void test_Predefined_CommanderUnit_Creation() {
         CommanderUnit commanderUnit = new CommanderUnit("Commander",180);
 
         assertEquals(25,commanderUnit.getAttack());
         assertEquals(15,commanderUnit.getArmor());
-    }
-
-    @Test
-    public void add_Unit_To_Army() {
-        InfantryUnit infantryUnit = new InfantryUnit("Infantry",100);
-        Army army = new Army("Test army");
-
-        army.add(infantryUnit);
-
-        assertTrue(army.hasUnits());
-    }
-
-    @Test
-    public void remove_Unit_From_Army() {
-        InfantryUnit infantryUnit = new InfantryUnit("Infantry", 100);
-        Army army = new Army("Test army");
-
-        // Adds unit
-        army.add(infantryUnit);
-        // Removes unit
-        army.remove(infantryUnit);
-
-        assertFalse(army.hasUnits());
     }
 
     @Test

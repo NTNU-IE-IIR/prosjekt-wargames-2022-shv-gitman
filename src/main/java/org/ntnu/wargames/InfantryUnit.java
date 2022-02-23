@@ -24,8 +24,8 @@ public class InfantryUnit extends Unit {
     }
 
     /**
-     * Returns the attack bonus for the unit.
-     * @return the attack bonus for the unit.
+     * Returns the default attack bonus for the unit.
+     * @return the default attack bonus for the unit.
      */
     @Override
     public int getAttackBonus() {
@@ -33,8 +33,8 @@ public class InfantryUnit extends Unit {
     }
 
     /**
-     * Returns the resistance bonus for the unit.
-     * @return the resistance bonus for the unit.
+     * Returns the default resistance bonus for the unit.
+     * @return the default resistance bonus for the unit.
      */
     @Override
     public int getResistBonus() {
