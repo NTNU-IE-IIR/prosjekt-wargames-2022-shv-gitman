@@ -73,6 +73,13 @@ public class Army {
         return this.units;
     }
 
+    public void printAllUnits() {
+        units.forEach(unit -> System.out.println("  " + unit.getName() +
+                " - " + unit.getHealth() +
+                " hp. Attacked: " + unit.getUnitAttackTurn() +
+                " times, defended " + unit.getUnitDefenceTurn() + " times."));
+    }
+
     /**
      * Returns a random unit from the army.
      * @return a random unit from the army.

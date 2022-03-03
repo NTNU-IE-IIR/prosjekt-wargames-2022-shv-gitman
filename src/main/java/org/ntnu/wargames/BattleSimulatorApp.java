@@ -18,6 +18,8 @@ public class BattleSimulatorApp {
         Army winner = battle.simulate();
 
         System.out.println("Winner: " + winner.toString());
+        System.out.println("Remaining units: ");
+        winner.printAllUnits();
     }
 
     /**
