@@ -1,5 +1,9 @@
 package org.ntnu.wargames;
 
+import java.io.*;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
@@ -120,6 +124,7 @@ public class Army {
 
   /**
    * Returns a list of infantry units in the army.
+   *
    * @return a list of infantry units in the army.
    */
   public List<Unit> getInfantryUnits() {
@@ -131,6 +136,7 @@ public class Army {
 
   /**
    * Returns a list of cavalry units in the army.
+   *
    * @return a list of cavalry units in the army.
    */
   public List<Unit> getCavalryUnits() {
@@ -142,6 +148,7 @@ public class Army {
 
   /**
    * Returns a list of ranged units in the army.
+   *
    * @return a list of ranged units in the army.
    */
   public List<Unit> getRangedUnits() {
@@ -152,12 +159,77 @@ public class Army {
 
   /**
    * Returns a list of commander units in the army.
+   *
    * @return a list of commander units in the army.
    */
   public List<Unit> getCommanderUnits() {
     return units.stream()
         .filter(unit -> unit instanceof CommanderUnit)
         .collect(Collectors.toList());
+  }
+
+  /**
+   * Creates an army from a text file.
+   *
+   * @param filename name of file
+   * @return an army.
+   */
+  public static Army uploadArmyFromFile(String filename) {
+
+    try (BufferedReader br = new BufferedReader(new FileReader(filename))) {
+
+      String name = br.readLine();
+      List<Unit> units = new ArrayList<>();
+
+      String line;
+      while ((line = br.readLine()) != null) {
+        String[] currentLine = line.split(",");
+
+        if (currentLine[0].equals("InfantryUnit")) {
+          Unit newUnit = new InfantryUnit(currentLine[1], Integer.parseInt(currentLine[2]));
+          units.add(newUnit);
+        }
+        if (currentLine[0].equals("RangedUnit")) {
+          Unit newUnit = new RangedUnit(currentLine[1], Integer.parseInt(currentLine[2]));
+          units.add(newUnit);
+        }
+        if (currentLine[0].equals("CavalryUnit")) {
+          Unit newUnit = new CavalryUnit(currentLine[1], Integer.parseInt(currentLine[2]));
+          units.add(newUnit);
+        }
+        if (currentLine[0].equals("CommanderUnit")) {
+          Unit newUnit = new CommanderUnit(currentLine[1], Integer.parseInt(currentLine[2]));
+          units.add(newUnit);
+        }
+      }
+
+      return new Army(name, units);
+
+    } catch (IOException ioe) {
+      System.out.println("Something went wrong..\nDetails: " + ioe.getMessage());
+      return null;
+    }
+  }
+
+  /**
+   * Saves an army from to cvs. file.
+   *
+   * @param filename name of file
+   */
+  public void saveArmyToFile(String filename) {
+    try {
+      FileWriter file = new FileWriter(filename);
+
+      file.write(this.name + "\n");
+
+      for (Unit unit: this.units) {
+        file.write(unit.getClass().getSimpleName() + "," + unit.getName() + "," + unit.getHealth() + "\n");
+      }
+
+      file.close();
+    } catch (IOException ioe) {
+      System.out.println("Something went wrong..\nDetails: " + ioe.getMessage());
+    }
   }
 
   /**
