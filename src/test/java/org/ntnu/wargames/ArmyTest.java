@@ -7,24 +7,24 @@ import static org.junit.Assert.assertTrue;
 
 public class ArmyTest {
 
-    @Test
-    public void test_Remove_Unit_From_Army() {
-        InfantryUnit infantryUnit = new InfantryUnit("Infantry", 100);
-        Army army = new Army("Test army");
+  @Test
+  public void test_Remove_Unit_From_Army() {
+    InfantryUnit infantryUnit = new InfantryUnit("Infantry", 100);
+    Army army = new Army("Test army");
 
-        army.add(infantryUnit);
-        army.remove(infantryUnit);
+    army.add(infantryUnit);
+    army.remove(infantryUnit);
 
-        assertFalse(army.hasUnits());
-    }
+    assertFalse(army.hasUnits());
+  }
 
-    @Test
-    public void test_Add_Unit_To_Army() {
-        InfantryUnit infantryUnit = new InfantryUnit("Infantry",100);
-        Army army = new Army("Test army");
+  @Test
+  public void test_Add_Unit_To_Army() {
+    InfantryUnit infantryUnit = new InfantryUnit("Infantry", 100);
+    Army army = new Army("Test army");
 
-        army.add(infantryUnit);
+    army.add(infantryUnit);
 
-        assertTrue(army.hasUnits());
-    }
+    assertTrue(army.hasUnits());
+  }
 }
