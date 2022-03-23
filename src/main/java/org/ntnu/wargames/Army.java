@@ -1,9 +1,6 @@
 package org.ntnu.wargames;
 
 import java.io.*;
-import java.nio.file.Files;
-import java.nio.file.Path;
-import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
@@ -222,14 +219,25 @@ public class Army {
 
       file.write(this.name + "\n");
 
-      for (Unit unit: this.units) {
-        file.write(unit.getClass().getSimpleName() + "," + unit.getName() + "," + unit.getHealth() + "\n");
+      for (Unit unit : this.units) {
+        file.write(unit.getClass().getSimpleName() + ","
+            + unit.getName() + ","
+            + unit.getHealth() + "\n");
       }
 
       file.close();
     } catch (IOException ioe) {
       System.out.println("Something went wrong..\nDetails: " + ioe.getMessage());
     }
+  }
+
+  /**
+   * Returns name of Army.
+   *
+   * @return name of Army
+   */
+  public String getName() {
+    return name;
   }
 
   /**
@@ -252,8 +260,12 @@ public class Army {
    */
   @Override
   public boolean equals(Object o) {
-    if (this == o) return true;
-    if (o == null || getClass() != o.getClass()) return false;
+    if (this == o) {
+      return true;
+    }
+    if (o == null || getClass() != o.getClass()) {
+      return false;
+    }
     Army army = (Army) o;
     return Objects.equals(name, army.name) && Objects.equals(units, army.units);
   }

@@ -1,0 +1,92 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!--
+  Copyright (c) 2015, 2019, Gluon and/or its affiliates.
+  All rights reserved. Use is subject to license terms.
+
+  This file is available and licensed under the following license:
+
+  Redistribution and use in source and binary forms, with or without
+  modification, are permitted provided that the following conditions
+  are met:
+
+  - Redistributions of source code must retain the above copyright
+    notice, this list of conditions and the following disclaimer.
+  - Redistributions in binary form must reproduce the above copyright
+    notice, this list of conditions and the following disclaimer in
+    the documentation and/or other materials provided with the distribution.
+  - Neither the name of Oracle Corporation nor the names of its
+    contributors may be used to endorse or promote products derived
+    from this software without specific prior written permission.
+
+  THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS
+  "AS IS" AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT
+  LIMITED TO, THE IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR
+  A PARTICULAR PURPOSE ARE DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT
+  OWNER OR CONTRIBUTORS BE LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL,
+  SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT
+  LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS OF USE,
+  DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY
+  THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT
+  (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE
+  OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
+-->
+
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+<VBox prefHeight="600.0" prefWidth="800.0" xmlns="http://javafx.com/javafx/16" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.ntnu.wargames.Controller">
+    <children>
+        <AnchorPane maxHeight="-1.0" maxWidth="-1.0" VBox.vgrow="ALWAYS">
+            <children>
+                <Button fx:id="loadArmyOneButton" layoutX="22.0" layoutY="24.0" mnemonicParsing="false" onAction="#loadArmyOneButtonAction" text="Load Army 1" />
+                <Button fx:id="loadArmyTwoButton" layoutX="693.0" layoutY="24.0" mnemonicParsing="false" onAction="#loadArmyTwoButtonAction" text="Load Army 2" />
+                <Button fx:id="startSimulationButton" layoutX="350.0" layoutY="66.0" mnemonicParsing="false" onAction="#startSimulationButtonAction" text="Start simulation" />
+                <Button fx:id="restartSimulationButton" disable="true" layoutX="374.0" layoutY="153.0" mnemonicParsing="false" onAction="#restartSimulationButton" text="Restart" />
+                <TextField fx:id="winnerTextField" alignment="CENTER" editable="false" layoutX="297.0" layoutY="110.0" prefHeight="26.0" prefWidth="206.0" text="winner" />
+                <BorderPane layoutX="21.0" layoutY="66.0" prefHeight="200.0" prefWidth="262.0">
+                    <center>
+                        <ListView fx:id="armyOneListView" prefHeight="200.0" prefWidth="286.0" BorderPane.alignment="CENTER" />
+                    </center>
+                </BorderPane>
+                <BorderPane layoutX="511.0" layoutY="66.0" prefHeight="200.0" prefWidth="262.0">
+                    <center>
+                        <ListView fx:id="armyTwoListView" prefHeight="200.0" prefWidth="286.0" BorderPane.alignment="CENTER" />
+                    </center>
+                </BorderPane>
+                <MenuButton fx:id="armyOneMenuButton" disable="true" layoutX="30.0" layoutY="287.0" mnemonicParsing="false" text="View unit from army 1">
+                    <items>
+                        <MenuItem fx:id="armyOneMenuItemCommander" mnemonicParsing="false" onAction="#loadArmyOneUnitInfo" text="CommanderUnit" />
+                        <MenuItem fx:id="armyOneMenuItemInfantry" mnemonicParsing="false" onAction="#loadArmyOneUnitInfo" text="InfantryUnit" />
+                        <MenuItem fx:id="armyOneMenuItemRanged" mnemonicParsing="false" onAction="#loadArmyOneUnitInfo" text="RangedUnit" />
+                        <MenuItem fx:id="armyOneMenuItemCavalry" mnemonicParsing="false" onAction="#loadArmyOneUnitInfo" text="CavalryUnit" />
+                    </items>
+                </MenuButton>
+                <MenuButton fx:id="armyTwoMenuButton" disable="true" layoutX="626.0" layoutY="287.0" mnemonicParsing="false" text="View unit from army 2">
+                    <items>
+                        <MenuItem fx:id="armyTwoMenuItemCommander" mnemonicParsing="false" onAction="#loadArmyTwoUnitInfo" text="CommanderUnit" />
+                        <MenuItem fx:id="armyTwoMenuItemInfantry" mnemonicParsing="false" onAction="#loadArmyTwoUnitInfo" text="InfantryUnit" />
+                        <MenuItem fx:id="armyTwoMenuItemRanged" mnemonicParsing="false" onAction="#loadArmyTwoUnitInfo" text="RangedUnit" />
+                        <MenuItem fx:id="armyTwoMenuItemCavalry" mnemonicParsing="false" onAction="#loadArmyTwoUnitInfo" text="CavalryUnit" />
+                    </items>
+                </MenuButton>
+                <TableView fx:id="armyOneUnitTableView" disable="true" layoutX="22.0" layoutY="371.0" prefHeight="214.0" prefWidth="262.0">
+                    <columns>
+                        <TableColumn fx:id="armyOneTableColumnName" prefWidth="104.99999809265137" text="Name" />
+                        <TableColumn fx:id="armyOneTableColumnHealth" prefWidth="42.20000457763672" text="Health" />
+                        <TableColumn fx:id="armyOneTableColumnAttack" prefWidth="51.399993896484375" text="Attack" />
+                        <TableColumn fx:id="armyOneTableColumnDefence" prefWidth="56.0" text="Defence" />
+                    </columns>
+                </TableView>
+                <TableView fx:id="armyTwoUnitTableView" disable="true" layoutX="506.0" layoutY="371.0" prefHeight="214.0" prefWidth="262.0">
+                    <columns>
+                        <TableColumn fx:id="armyTwoTableColumnName" prefWidth="111.99996948242188" text="Name" />
+                        <TableColumn fx:id="armyTwoTableColumnHealth" prefWidth="48.0" text="Health" />
+                        <TableColumn fx:id="armyTwoTableColumnAttack" prefWidth="48.0" text="Attack" />
+                        <TableColumn fx:id="armyTwoTableColumnDefence" prefWidth="54.39996337890625" text="Defence" />
+                    </columns>
+                </TableView>
+            </children>
+        </AnchorPane>
+    </children>
+</VBox>

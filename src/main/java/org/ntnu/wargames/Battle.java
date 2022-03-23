@@ -31,13 +31,14 @@ public class Battle {
    */
   public Army simulate() {
     // Template units for testing.
-    addArmy_One();
-    addArmy_Two();
+    // addArmy_One();
+    // addArmy_Two();
 
     // Army one attacks first.
     int turn = 0;
     Unit attackerUnit = armyOne.getRandom();
     Unit defenderUnit = armyTwo.getRandom();
+    attackerUnit.attack(defenderUnit);
 
     while (armyOne.hasUnits() && armyTwo.hasUnits()) {
 
