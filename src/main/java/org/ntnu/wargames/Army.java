@@ -213,7 +213,7 @@ public class Army {
    *
    * @param filename name of file
    */
-  public void saveArmyToFile(String filename) {
+  public boolean saveArmyToFile(String filename) {
     try {
       FileWriter file = new FileWriter(filename);
 
@@ -224,10 +224,11 @@ public class Army {
             + unit.getName() + ","
             + unit.getHealth() + "\n");
       }
-
       file.close();
+      return true;
     } catch (IOException ioe) {
       System.out.println("Something went wrong..\nDetails: " + ioe.getMessage());
+      return false;
     }
   }
 

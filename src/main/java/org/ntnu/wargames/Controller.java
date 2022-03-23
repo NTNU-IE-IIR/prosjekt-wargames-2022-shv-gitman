@@ -1,12 +1,16 @@
 package org.ntnu.wargames;
 
 import java.io.File;
+import java.util.Optional;
+
+import javafx.application.Platform;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
+import javafx.scene.text.Text;
 import javafx.stage.FileChooser;
 import javafx.stage.Stage;
 
@@ -20,6 +24,10 @@ public class Controller {
   private Army placeholderArmyOne;
   private Army placeholderArmyTwo;
 
+  @FXML
+  private Text fileOneTextField;
+  @FXML
+  private Text fileTwoTextField;
   @FXML
   private MenuButton armyOneMenuButton;
   @FXML
@@ -61,12 +69,6 @@ public class Controller {
   @FXML
   private TableView armyTwoUnitTableView;
   @FXML
-  private Button loadArmyOneButton;
-  @FXML
-  private Button loadArmyTwoButton;
-  @FXML
-  private Button startSimulationButton;
-  @FXML
   private Button restartSimulationButton;
   @FXML
   private TextField winnerTextField;
@@ -76,7 +78,7 @@ public class Controller {
   private ListView armyTwoListView;
 
   @FXML
-  protected void startSimulationButtonAction(ActionEvent actionEvent) {
+  protected void startSimulation(ActionEvent actionEvent) {
     if (armyOne != null && armyTwo != null && armyOne.hasUnits() && armyTwo.hasUnits()) {
 
       Battle battle = new Battle(armyOne, armyTwo);
@@ -93,7 +95,7 @@ public class Controller {
   }
 
   @FXML
-  protected void restartSimulationButton(ActionEvent actionEvent) {
+  protected void restartSimulation(ActionEvent actionEvent) {
     restartSimulationButton.setDisable(true);
     winnerTextField.setText("winner");
 
@@ -108,13 +110,13 @@ public class Controller {
   }
 
   @FXML
-  protected void loadArmyOneButtonAction(ActionEvent actionEvent) {
-    loadArmyButton("armyOne", armyOneMenuButton);
+  protected void loadArmyOne(ActionEvent actionEvent) {
+    loadArmyButton("armyOne", armyOneMenuButton, fileOneTextField);
   }
 
   @FXML
-  protected void loadArmyTwoButtonAction(ActionEvent actionEvent) {
-    loadArmyButton("armyTwo", armyTwoMenuButton);
+  protected void loadArmyTwo(ActionEvent actionEvent) {
+    loadArmyButton("armyTwo", armyTwoMenuButton, fileTwoTextField);
   }
 
   @FXML
@@ -159,14 +161,35 @@ public class Controller {
     }
   }
 
-  private void loadArmyButton(String currentArmy, MenuButton menuButton) {
+  @FXML
+  protected void exitButton(ActionEvent actionEvent) {
+    Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
+    alert.setTitle("Exit confirmation");
+    alert.setHeaderText("Exit wargames?");
+    alert.setContentText("Are you sure you want to exit?");
+
+    Optional<ButtonType> result = alert.showAndWait();
+
+    if (result.get() == ButtonType.OK) {
+      Platform.exit();
+    }
+  }
+
+  /**
+   * Loads an army of units from a text file.
+   * @param currentArmy Army where units will be added.
+   * @param menuButton Menu button to enable after army is loaded.
+   * @param loadText Text to print which file has been loaded.
+   */
+  private void loadArmyButton(String currentArmy, MenuButton menuButton, Text loadText) {
     FileChooser fileChooser = new FileChooser();
     Stage fileStage = new Stage();
 
     File selectedFile = fileChooser.showOpenDialog(fileStage);
+    loadText.setText("Loaded: " + selectedFile.getName());
 
     if (selectedFile == null) {
-      // Alert popup.
+      // TODO: Alert popup
       System.out.println("No file chosen.");
     } else {
       if (currentArmy.equals("armyOne")) {

@@ -84,6 +84,6 @@ public class ArmyTest {
       army.add(new CavalryUnit("Cavalry", 100));
     }
 
-    army.saveArmyToFile("test.csv");
+    assertTrue(army.saveArmyToFile("test.csv"));
   }
 }
