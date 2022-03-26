@@ -7,7 +7,7 @@ import static org.junit.Assert.*;
 public class UnitTest {
 
   @Test
-  public void test_InfantryUnit_Creation() {
+  public void testInfantryUnitCreation() {
     InfantryUnit infantryUnit = new InfantryUnit("Infantry", 100, 25, 15);
 
     assertEquals("Infantry", infantryUnit.getName());
@@ -19,7 +19,7 @@ public class UnitTest {
   }
 
   @Test
-  public void test_Predefined_InfantryUnit_Creation() {
+  public void testPredefinedInfantryUnitCreation() {
     InfantryUnit infantryUnit = new InfantryUnit("Infantry", 100);
 
     assertEquals(15, infantryUnit.getAttack());
@@ -27,7 +27,7 @@ public class UnitTest {
   }
 
   @Test
-  public void test_CommanderUnit_Creation() {
+  public void testCommanderUnitCreation() {
     CommanderUnit commanderUnit = new CommanderUnit("Commander", 180, 50, 20);
 
     assertEquals("Commander", commanderUnit.getName());
@@ -39,7 +39,7 @@ public class UnitTest {
   }
 
   @Test
-  public void test_Predefined_CommanderUnit_Creation() {
+  public void testPredefinedCommanderUnitCreation() {
     CommanderUnit commanderUnit = new CommanderUnit("Commander", 180);
 
     assertEquals(25, commanderUnit.getAttack());
@@ -47,7 +47,7 @@ public class UnitTest {
   }
 
   @Test
-  public void test_First_Attack_Cavalry_Infantry() {
+  public void testFirstAttackCavalryInfantry() {
     CavalryUnit cavalryUnit = new CavalryUnit("Cavalry", 100);
     InfantryUnit infantryUnit = new InfantryUnit("Infantry", 100);
 
@@ -59,7 +59,7 @@ public class UnitTest {
   }
 
   @Test
-  public void test_Second_Attack_Cavalry_Infantry() {
+  public void testSecondAttackCavalryInfantry() {
     CavalryUnit cavalryUnit = new CavalryUnit("Cavalry", 100);
     InfantryUnit infantryUnit = new InfantryUnit("Infantry", 100);
 
@@ -79,7 +79,7 @@ public class UnitTest {
   }
 
   @Test
-  public void test_RangedUnit_ResistanceBonus() {
+  public void testRangedUnitResistanceBonus() {
     InfantryUnit infantryUnit = new InfantryUnit("Infantry", 100);
     RangedUnit rangedUnit = new RangedUnit("Archer", 100);
 

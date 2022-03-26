@@ -32,6 +32,8 @@
   OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 -->
 
+<!-- TODO: See army name when loaded -->
+
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
 <?import javafx.scene.text.*?>
@@ -43,7 +45,7 @@
                 <Button layoutX="22.0" layoutY="24.0" mnemonicParsing="false" onAction="#loadArmyOne" text="Load Army 1" />
                 <Button layoutX="693.0" layoutY="24.0" mnemonicParsing="false" onAction="#loadArmyTwo" text="Load Army 2" />
                 <Button layoutX="350.0" layoutY="66.0" mnemonicParsing="false" onAction="#startSimulation" text="Start simulation" />
-                <Button disable="true" layoutX="374.0" layoutY="153.0" mnemonicParsing="false" onAction="#restartSimulation" text="Restart" />
+                <Button fx:id="restartSimulationButton" disable="true" layoutX="374.0" layoutY="153.0" mnemonicParsing="false" onAction="#restartSimulation" text="Restart" />
                 <Button layoutX="351.0" layoutY="558.0" mnemonicParsing="false" onAction="#exitButton" prefHeight="26.0" prefWidth="99.0" text="Exit" />
                 <TextField fx:id="winnerTextField" alignment="CENTER" editable="false" layoutX="297.0" layoutY="110.0" prefHeight="26.0" prefWidth="206.0" text="winner" />
                 <Text fx:id="fileOneTextField" layoutX="22.0" layoutY="71.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Loaded: " />

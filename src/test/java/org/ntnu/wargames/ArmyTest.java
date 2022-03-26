@@ -2,12 +2,14 @@ package org.ntnu.wargames;
 
 import org.junit.Test;
 
+import java.util.Objects;
+
 import static org.junit.Assert.*;
 
 public class ArmyTest {
 
   @Test
-  public void test_Remove_Unit_From_Army() {
+  public void testRemoveUnitFromArmy() {
     InfantryUnit infantryUnit = new InfantryUnit("Infantry", 100);
     Army army = new Army("Test army");
 
@@ -18,7 +20,7 @@ public class ArmyTest {
   }
 
   @Test
-  public void test_Add_Unit_To_Army() {
+  public void testAddUnitToArmy() {
     InfantryUnit infantryUnit = new InfantryUnit("Infantry", 100);
     Army army = new Army("Test army");
 
@@ -28,7 +30,7 @@ public class ArmyTest {
   }
 
   @Test
-  public void test_Get_Infantry_Units() {
+  public void testGetInfantryUnits() {
     Unit infantryUnit1 = new InfantryUnit("Infantry1", 100);
     Unit infantryUnit2 = new InfantryUnit("Infantry2", 100);
     Unit cavalryUnit = new CavalryUnit("Cavalry", 100);
@@ -51,23 +53,23 @@ public class ArmyTest {
   }
 
   @Test
-  public void test_Orc_Army_Creation_From_File() {
+  public void testOrcArmyCreationFromFile() {
     Army army = Army.uploadArmyFromFile("orc-army.csv");
 
-    assertEquals(army.getAmountOfUnits(), 16);
+    assertEquals(Objects.requireNonNull(army).getAmountOfUnits(), 16);
     assertTrue(army.hasUnits());
   }
 
   @Test
-  public void test_Human_Army_Creation_From_File() {
+  public void testHumanArmyCreationFromFile() {
     Army army = Army.uploadArmyFromFile("human-army.csv");
 
-    assertEquals(army.getAmountOfUnits(), 16);
+    assertEquals(Objects.requireNonNull(army).getAmountOfUnits(), 16);
     assertTrue(army.hasUnits());
   }
 
   @Test
-  public void test_Save_Army_To_File() {
+  public void testSaveArmyToFile() {
     Army army = new Army("Test army");
 
     army.add(new CommanderUnit("Mountain King", 180));

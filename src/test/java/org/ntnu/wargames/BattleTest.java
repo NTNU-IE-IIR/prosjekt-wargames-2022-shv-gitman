@@ -2,12 +2,14 @@ package org.ntnu.wargames;
 
 import org.junit.Test;
 
+import java.util.Objects;
+
 import static org.junit.Assert.assertEquals;
 
 public class BattleTest {
 
   @Test
-  public void test_Battle_Simulation() {
+  public void testBattleSimulation() {
     InfantryUnit infantryUnit = new InfantryUnit("Infantry", 1000);
     InfantryUnit goblinUnit = new InfantryUnit("Goblin", 10);
 
@@ -29,7 +31,7 @@ public class BattleTest {
   }
 
   @Test
-  public void test_Battle_Simulation_With_Army_From_Text_file() {
+  public void testBattleSimulationWithArmyFromTextFile() {
     Army orcArmy = Army.uploadArmyFromFile("orc-army.csv");
     Army humanArmy = Army.uploadArmyFromFile("human-army.csv");
 
@@ -39,7 +41,7 @@ public class BattleTest {
 
     winner.printAllUnits();
 
-    if (orcArmy.hasUnits()) {
+    if (Objects.requireNonNull(orcArmy).hasUnits()) {
       assertEquals(winner, orcArmy);
     } else {
       assertEquals(winner, humanArmy);
