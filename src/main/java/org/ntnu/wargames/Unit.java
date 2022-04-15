@@ -4,12 +4,13 @@ package org.ntnu.wargames;
  * Represents the base of a unit.
  */
 public abstract class Unit {
-  private String name;
+  private final String name;
   private int health;
-  private int attack;
-  private int armor;
+  private final int attack;
+  private final int armor;
+  private String terrain;
 
-  // For simulering
+  // For simulating the additional attack bonus
   private int unitAttackTurn = 0;
   private int unitDefenceTurn = 0;
 
@@ -23,9 +24,10 @@ public abstract class Unit {
    */
   public Unit(String name, int health, int attack, int armor) {
     this.name = name;
-    this.health = health;
-    this.attack = attack;
-    this.armor = armor;
+    this.health = Math.max(health, 0);
+    this.attack = Math.max(attack, 0);
+    this.armor = Math.max(armor, 0);
+    this.terrain = "";
   }
 
   /**
@@ -42,30 +44,63 @@ public abstract class Unit {
     int attackBonus = this.getAttackBonus();
     int resistBonus = opponent.getResistBonus();
 
-    // Checks if its CavalryUnits first attack and adds extra attackbonus.
-    if (this instanceof CavalryUnit && unitAttackTurn == 0) {
-      attackBonus = attackBonus + 4;
+    // Gives additional attack-modifiers.
+    if (this instanceof InfantryUnit && terrain.equals("FOREST")) {
+      attackBonus = attackBonus + this.getForestModifier();
+    } else if (this instanceof RangedUnit) {
+      if (terrain.equals("HILL")) {
+        attackBonus = attackBonus + this.getHillModifier();
+      } else if (terrain.equals("FOREST")) {
+        attackBonus = attackBonus + this.getForestModifier();
+      }
+    } else if (this instanceof CavalryUnit) {
+      if (unitAttackTurn == 0) {
+        attackBonus = attackBonus + 4;
+      }
+      if (terrain.equals("PLAINS")) {
+        attackBonus = attackBonus + this.getPlainsModifier();
+      }
+    } else if (this instanceof ArtilleryUnit) {
+      if (unitAttackTurn == 0) {
+        attackBonus = attackBonus + 26;
+      }
+      if (terrain.equals("PLAINS")) {
+        attackBonus = attackBonus + this.getPlainsModifier();
+      }
     }
 
-    // Checks if Ranged unit has been attacked before and adds resistance bonus.
+    // Gives additional defence-modifiers.
     if (opponent instanceof RangedUnit) {
       if (opponent.getUnitDefenceTurn() == 0) {
         resistBonus = resistBonus + 4;
       } else if (opponent.getUnitDefenceTurn() == 1) {
         resistBonus = resistBonus + 2;
       }
+      if (terrain.equals("HILL")) {
+        resistBonus = resistBonus + opponent.getHillModifier();
+      }
+    } else if (opponent instanceof InfantryUnit && terrain.equals("FOREST")) {
+      resistBonus = resistBonus + opponent.getForestModifier();
+    } else if (opponent instanceof CavalryUnit && terrain.equals("FOREST")) {
+      resistBonus = resistBonus + opponent.getForestModifier();
+    } else if (opponent instanceof ArtilleryUnit) {
+      if (opponent.getUnitDefenceTurn() == 0 && !(terrain.equals("HILL"))) {
+        resistBonus = resistBonus + attackBonus + this.attack;
+      }
+      if (terrain.equals("HILL")) {
+        resistBonus = resistBonus + opponent.getHillModifier();
+      }
     }
 
     this.increaseUnitAttackTurn();
     opponent.increaseUnitDefenceTurn();
 
-    // TODO: checks if attack is higher than defence.
-
-    // Sets opponents new health.
-    opponent.setHealth(
-        opponent.getHealth()
-            - (this.attack + attackBonus)
-            + (opponent.getArmor() + resistBonus));
+    // Only attacks if the attack is higher than opponents defence
+    if ((this.attack + attackBonus) > (opponent.getArmor() + resistBonus)) {
+      opponent.setHealth(opponent.getHealth() - (this.attack + attackBonus) + (opponent.getArmor() + resistBonus));
+    } else {
+      // System.out.println(getName() + " doesnt have enough attack (" + (attack + attackBonus) + ") to do anything against " + opponent.getName() + " (" + (opponent.getArmor() + opponent.getResistBonus()) + ")");
+    }
   }
 
   /**
@@ -113,6 +148,14 @@ public abstract class Unit {
     this.health = health;
   }
 
+  public void setTerrain(String terrain) {
+    this.terrain = terrain;
+  }
+
+  public String getTerrain() {
+    return terrain;
+  }
+
   /**
    * Returns a string of the name, health, attack and armor
    * values of the unit.
@@ -121,11 +164,7 @@ public abstract class Unit {
    */
   @Override
   public String toString() {
-    return "Unit: "
-        + "name = " + name
-        + ", health = " + health
-        + ", attack = " + attack
-        + ", armor = " + armor;
+    return "Unit: " + "name = " + name + ", health = " + health + ", attack = " + attack + ", armor = " + armor;
   }
 
   /**
@@ -141,6 +180,12 @@ public abstract class Unit {
    * @return The resist bonus of the unit.
    */
   public abstract int getResistBonus();
+
+  public abstract int getHillModifier();
+
+  public abstract int getPlainsModifier();
+
+  public abstract int getForestModifier();
 
   /**
    * Returns the amount of times a unit has attacked.

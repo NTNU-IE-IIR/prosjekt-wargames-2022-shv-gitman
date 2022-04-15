@@ -11,8 +11,9 @@ import java.util.stream.Collectors;
  * Represents an army with a list of units.
  */
 public class Army {
-  private String name;
+  private final String name;
   private List<Unit> units = new ArrayList<>();
+  private final Random random = new Random();
 
   /**
    * Creates an empty army.
@@ -42,10 +43,9 @@ public class Army {
   public void add(Unit unit) {
     if (unit == null) {
       throw new IllegalArgumentException("Unit is empty");
+    } else {
+      this.units.add(unit);
     }
-    this.units.add(unit);
-    // TODO: check if unit is already in list.
-    // TODO: check if unit = null
   }
 
   /**
@@ -102,7 +102,6 @@ public class Army {
    * @return a random unit from the army.
    */
   public Unit getRandom() {
-    Random random = new Random();
     return units.get(random.nextInt(units.size()));
   }
 
@@ -166,37 +165,64 @@ public class Army {
   }
 
   /**
+   * Returns a list of artillery units in the army.
+   *
+   * @return a list of artillery units in the army.
+   */
+  public List<Unit> getArtilleryUnits() {
+    return units.stream()
+        .filter(unit -> unit instanceof ArtilleryUnit)
+        .collect(Collectors.toList());
+  }
+
+  /**
    * Creates an army from a text file.
    *
-   * @param filename name of file
+   * @param filename name of file.
    * @return an army.
    */
   public static Army uploadArmyFromFile(String filename) {
+    List<Unit> units = new ArrayList<>();
 
     try (BufferedReader br = new BufferedReader(new FileReader(filename))) {
 
-      String name = br.readLine();
-      List<Unit> units = new ArrayList<>();
-
       String line;
-      while ((line = br.readLine()) != null) {
-        String[] currentLine = line.split(",");
+      String name = "";
+      int currentLineNumber = 0;
 
-        if (currentLine[0].equals("InfantryUnit")) {
-          Unit newUnit = new InfantryUnit(currentLine[1], Integer.parseInt(currentLine[2]));
-          units.add(newUnit);
-        }
-        if (currentLine[0].equals("RangedUnit")) {
-          Unit newUnit = new RangedUnit(currentLine[1], Integer.parseInt(currentLine[2]));
-          units.add(newUnit);
-        }
-        if (currentLine[0].equals("CavalryUnit")) {
-          Unit newUnit = new CavalryUnit(currentLine[1], Integer.parseInt(currentLine[2]));
-          units.add(newUnit);
-        }
-        if (currentLine[0].equals("CommanderUnit")) {
-          Unit newUnit = new CommanderUnit(currentLine[1], Integer.parseInt(currentLine[2]));
-          units.add(newUnit);
+      if ((line = br.readLine()) != null) {
+        name = line;
+
+        while ((line = br.readLine()) != null) {
+          String[] currentLine = line.split(",");
+
+          if (!(currentLine[2].equals("null"))) {
+            switch (currentLine[0]) {
+              case "InfantryUnit" -> {
+                Unit newUnit = new InfantryUnit(currentLine[1], Integer.parseInt(currentLine[2]));
+                units.add(newUnit);
+              }
+              case "RangedUnit" -> {
+                Unit newUnit = new RangedUnit(currentLine[1], Integer.parseInt(currentLine[2]));
+                units.add(newUnit);
+              }
+              case "CavalryUnit" -> {
+                Unit newUnit = new CavalryUnit(currentLine[1], Integer.parseInt(currentLine[2]));
+                units.add(newUnit);
+              }
+              case "CommanderUnit" -> {
+                Unit newUnit = new CommanderUnit(currentLine[1], Integer.parseInt(currentLine[2]));
+                units.add(newUnit);
+              }
+              case "ArtilleryUnit" -> {
+                Unit newUnit = new ArtilleryUnit(currentLine[1], Integer.parseInt(currentLine[2]));
+                units.add(newUnit);
+              }
+            }
+          } else {
+            System.out.println("Health was null at line: " + currentLineNumber + " in " + filename);
+          }
+          currentLineNumber++;
         }
       }
 
@@ -204,7 +230,7 @@ public class Army {
 
     } catch (IOException ioe) {
       System.out.println("Something went wrong..\nDetails: " + ioe.getMessage());
-      return null;
+      return new Army("Army not found", units);
     }
   }
 

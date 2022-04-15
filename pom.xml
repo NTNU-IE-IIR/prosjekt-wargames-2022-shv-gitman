@@ -31,7 +31,7 @@
                 <artifactId>javafx-maven-plugin</artifactId>
                 <version>0.0.8</version>
                 <configuration>
-                    <mainClass>org.ntnu.wargames.Main</mainClass>
+                    <mainClass>org.ntnu.wargames.ui.Main</mainClass>
                 </configuration>
             </plugin>
             <plugin>

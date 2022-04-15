@@ -1,6 +1,8 @@
-package org.ntnu.wargames;
+package org.ntnu.wargames.ui;
 
 import java.io.IOException;
+import java.util.Objects;
+
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
@@ -21,7 +23,7 @@ public class Main extends Application {
   public void start(Stage primaryStage) {
     Parent root = null;
     try {
-      root = FXMLLoader.load(getClass().getResource("gui.fxml"));
+      root = FXMLLoader.load(Objects.requireNonNull(getClass().getResource("gui/gui.fxml")));
 
       primaryStage.setTitle("Wargames");
       primaryStage.setScene(new Scene(root, 800, 600));

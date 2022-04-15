@@ -43,7 +43,7 @@ public class UnitTest {
     CommanderUnit commanderUnit = new CommanderUnit("Commander", 180);
 
     assertEquals(25, commanderUnit.getAttack());
-    assertEquals(15, commanderUnit.getArmor());
+    assertEquals(14, commanderUnit.getArmor());
   }
 
   @Test
@@ -102,5 +102,25 @@ public class UnitTest {
     infantryUnit.attack(rangedUnit);
 
     assertEquals(85, rangedUnit.getHealth());
+  }
+
+  @Test
+  public void testCavalryResistanceBonusInForest() {
+    RangedUnit rangedUnit = new RangedUnit("Archer", 100);
+    CavalryUnit cavalryUnit = new CavalryUnit("Cavalry", 100);
+
+    Army armyOne = new Army("Test Attackers");
+    armyOne.add(rangedUnit);
+    Army armyTwo = new Army("Test Defenders");
+    armyTwo.add(cavalryUnit);
+
+    Battle battle = new Battle(armyOne, armyTwo, "FOREST");
+
+    // Ranged attack: 15 + 3 - 2 = 16
+    // Cavalry defence: 12 + 1 - 1 = 12
+    // Expected health = 96
+    rangedUnit.attack(cavalryUnit);
+
+    assertEquals(96, cavalryUnit.getHealth());
   }
 }

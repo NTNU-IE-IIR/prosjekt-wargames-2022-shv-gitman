@@ -2,6 +2,7 @@ package org.ntnu.wargames;
 
 import org.junit.Test;
 
+import java.io.IOException;
 import java.util.Objects;
 
 import static org.junit.Assert.assertEquals;
@@ -19,7 +20,7 @@ public class BattleTest {
     testArmyOne.add(infantryUnit);
     testArmyTwo.add(goblinUnit);
 
-    Battle battle = new Battle(testArmyOne, testArmyTwo);
+    Battle battle = new Battle(testArmyOne, testArmyTwo, "PLAINS");
 
     Army winner = battle.simulate();
 
@@ -35,7 +36,7 @@ public class BattleTest {
     Army orcArmy = Army.uploadArmyFromFile("orc-army.csv");
     Army humanArmy = Army.uploadArmyFromFile("human-army.csv");
 
-    Battle battle = new Battle(orcArmy, humanArmy);
+    Battle battle = new Battle(orcArmy, humanArmy, "PLAINS");
 
     Army winner = battle.simulate();
 
