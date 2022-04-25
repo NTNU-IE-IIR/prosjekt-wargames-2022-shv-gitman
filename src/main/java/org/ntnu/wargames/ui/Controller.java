@@ -2,6 +2,7 @@ package org.ntnu.wargames.ui;
 
 import java.io.File;
 import java.io.IOException;
+
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
@@ -157,7 +158,9 @@ public class Controller {
    * @param armyFileOne     army file for army one
    * @param armyFileTwo     army file for army two
    */
-  private void initData(Army armyOne, Army armyTwo, Army placeHolderArmy, File armyFileOne, File armyFileTwo) {
+  private void initData(
+      Army armyOne, Army armyTwo, Army placeHolderArmy, File armyFileOne, File armyFileTwo
+  ) {
     this.armyOne = armyOne;
     this.armyTwo = armyTwo;
     this.placeHolderArmy = placeHolderArmy;
@@ -279,20 +282,23 @@ public class Controller {
   }
 
   /**
-   * Opens a new window to view the units in the selected army
+   * Opens a new window to view the units in the selected army.
    */
   public void openUnitViewWindow() {
     Parent root;
     try {
-      FXMLLoader loader = new FXMLLoader();
-      loader.setLocation(getClass().getResource("gui/unitView.fxml"));
+      FXMLLoader loader = new FXMLLoader(
+          getClass().getResource("gui/unitView.fxml")
+      );
       root = loader.load();
 
       Controller controller = loader.getController();
 
       Stage stage = new Stage();
       stage.setTitle("Unit Info");
-      stage.setScene(new Scene(root, 400, 400));
+      stage.setScene(new Scene(
+          root, 400, 400)
+      );
       controller.initData(armyOne, armyTwo, placeHolderArmy, armyFileOne, armyFileTwo);
 
       stage.show();
