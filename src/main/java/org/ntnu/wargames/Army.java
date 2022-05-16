@@ -1,6 +1,9 @@
 package org.ntnu.wargames;
 
-import java.io.*;
+import java.io.BufferedReader;
+import java.io.FileReader;
+import java.io.FileWriter;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
@@ -125,8 +128,8 @@ public class Army {
    */
   public List<Unit> getInfantryUnits() {
     return units.stream()
-        .filter(unit -> unit instanceof InfantryUnit)
-        .collect(Collectors.toList());
+        .filter(InfantryUnit.class::isInstance)
+        .toList();
 
   }
 
@@ -137,9 +140,9 @@ public class Army {
    */
   public List<Unit> getCavalryUnits() {
     return units.stream()
-        .filter(unit -> unit instanceof CavalryUnit)
+        .filter(CavalryUnit.class::isInstance)
         .filter(unit -> !(unit instanceof CommanderUnit))
-        .collect(Collectors.toList());
+        .toList();
   }
 
   /**
@@ -149,8 +152,8 @@ public class Army {
    */
   public List<Unit> getRangedUnits() {
     return units.stream()
-        .filter(unit -> unit instanceof RangedUnit)
-        .collect(Collectors.toList());
+        .filter(RangedUnit.class::isInstance)
+        .toList();
   }
 
   /**
@@ -160,8 +163,8 @@ public class Army {
    */
   public List<Unit> getCommanderUnits() {
     return units.stream()
-        .filter(unit -> unit instanceof CommanderUnit)
-        .collect(Collectors.toList());
+        .filter(CommanderUnit.class::isInstance)
+        .toList();
   }
 
   /**
@@ -171,8 +174,8 @@ public class Army {
    */
   public List<Unit> getArtilleryUnits() {
     return units.stream()
-        .filter(unit -> unit instanceof ArtilleryUnit)
-        .collect(Collectors.toList());
+        .filter(ArtilleryUnit.class::isInstance)
+        .toList();
   }
 
   /**
@@ -238,8 +241,10 @@ public class Army {
    * Saves an army from to cvs. file.
    *
    * @param filename name of file
+   * @return saveStatus, true if successfully saved army to a file, false if not.
    */
   public boolean saveArmyToFile(String filename) {
+    boolean saveStatus = false;
     try {
       FileWriter file = new FileWriter(filename);
 
@@ -251,11 +256,11 @@ public class Army {
             + unit.getHealth() + "\n");
       }
       file.close();
-      return true;
+      saveStatus = true;
     } catch (IOException ioe) {
       System.out.println("Something went wrong..\nDetails: " + ioe.getMessage());
-      return false;
     }
+    return saveStatus;
   }
 
   /**

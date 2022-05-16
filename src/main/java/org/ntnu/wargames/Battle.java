@@ -14,6 +14,7 @@ public class Battle {
    *
    * @param armyOne the first army in the battle.
    * @param armyTwo the second army in the battle.
+   * @param terrain the terrain of the battle.
    */
   public Battle(Army armyOne, Army armyTwo, String terrain) {
     this.armyOne = armyOne;
@@ -47,7 +48,7 @@ public class Battle {
   }
 
   /**
-   * Simulates one turn in a battle
+   * Simulates one turn in a battle.
    *
    * @param attackers attackers of battle
    * @param defenders defenders of battle turn
@@ -82,6 +83,12 @@ public class Battle {
     }
   }
 
+  /**
+   * Switches sides of the armies.
+   *
+   * @param armOne  army one
+   * @param armyTwo army two
+   */
   public void switchSides(Army armOne, Army armyTwo) {
     this.armyOne = armOne;
     this.armyTwo = armyTwo;

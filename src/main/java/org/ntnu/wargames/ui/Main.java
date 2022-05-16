@@ -2,7 +2,6 @@ package org.ntnu.wargames.ui;
 
 import java.io.IOException;
 import java.util.Objects;
-
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
@@ -15,6 +14,12 @@ import javafx.stage.Stage;
  */
 public class Main extends Application {
 
+  /**
+   * Launches the program
+   * ** T O D O **
+   *
+   * @param args args.
+   */
   public static void main(String[] args) {
     launch(args);
   }

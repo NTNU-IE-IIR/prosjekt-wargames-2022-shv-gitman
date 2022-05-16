@@ -99,7 +99,10 @@ public abstract class Unit {
     if ((this.attack + attackBonus) > (opponent.getArmor() + resistBonus)) {
       opponent.setHealth(opponent.getHealth() - (this.attack + attackBonus) + (opponent.getArmor() + resistBonus));
     } else {
-      // System.out.println(getName() + " doesnt have enough attack (" + (attack + attackBonus) + ") to do anything against " + opponent.getName() + " (" + (opponent.getArmor() + opponent.getResistBonus()) + ")");
+      // System.out.println(
+      // getName() + " doesnt have enough attack (" + (attack + attackBonus) + ") to do anything against "
+      // + opponent.getName() + " (" + (opponent.getArmor() + opponent.getResistBonus()) + ")"
+      // );
     }
   }
 
@@ -148,10 +151,20 @@ public abstract class Unit {
     this.health = health;
   }
 
+  /**
+   * Sets the terrain the Unit is on.
+   *
+   * @param terrain terrain to put Unit on
+   */
   public void setTerrain(String terrain) {
     this.terrain = terrain;
   }
 
+  /**
+   * Returns terrain unit is on.
+   *
+   * @return terrain unit is on
+   */
   public String getTerrain() {
     return terrain;
   }
@@ -164,7 +177,8 @@ public abstract class Unit {
    */
   @Override
   public String toString() {
-    return "Unit: " + "name = " + name + ", health = " + health + ", attack = " + attack + ", armor = " + armor;
+    return "Unit: " + "name = " + name + ", health = " + health
+        + ", attack = " + attack + ", armor = " + armor;
   }
 
   /**
@@ -181,10 +195,25 @@ public abstract class Unit {
    */
   public abstract int getResistBonus();
 
+  /**
+   * Returns hill modifier of the unit.
+   *
+   * @return hill modifier of the unit
+   */
   public abstract int getHillModifier();
 
+  /**
+   * Returns plains modifier of the unit.
+   *
+   * @return plains modifier of the unit
+   */
   public abstract int getPlainsModifier();
 
+  /**
+   * Returns forest modifier of the unit.
+   *
+   * @return forest modifier of the unit
+   */
   public abstract int getForestModifier();
 
   /**

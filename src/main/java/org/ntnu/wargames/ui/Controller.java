@@ -2,21 +2,31 @@ package org.ntnu.wargames.ui;
 
 import java.io.File;
 import java.io.IOException;
-
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
-import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
-import javafx.scene.control.*;
+import javafx.scene.control.Button;
+import javafx.scene.control.ListView;
+import javafx.scene.control.TableColumn;
+import javafx.scene.control.TableView;
+import javafx.scene.control.TextArea;
+import javafx.scene.control.TextField;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.text.Text;
 import javafx.stage.FileChooser;
 import javafx.stage.Stage;
-import org.ntnu.wargames.*;
+import org.ntnu.wargames.Army;
+import org.ntnu.wargames.ArtilleryUnit;
+import org.ntnu.wargames.Battle;
+import org.ntnu.wargames.CavalryUnit;
+import org.ntnu.wargames.CommanderUnit;
+import org.ntnu.wargames.InfantryUnit;
+import org.ntnu.wargames.RangedUnit;
+import org.ntnu.wargames.Unit;
 
 /**
  * Responsible for handling the GUI-interaction from the user.
@@ -64,7 +74,8 @@ public class Controller {
 
   @FXML
   protected void startSimulation(ActionEvent actionEvent) {
-    if (armyOne != null && armyTwo != null && armyOne.hasUnits() && armyTwo.hasUnits() && !(terrain.equals(""))) {
+    if (armyOne != null && armyTwo != null && armyOne.hasUnits()
+        && armyTwo.hasUnits() && !(terrain.equals(""))) {
       Battle battle;
 
       double order = Math.random();
@@ -82,7 +93,9 @@ public class Controller {
       winnerTextArea.setText(winner.getName());
       restartSimulationButton.setDisable(false);
     } else {
-      winnerTextArea.setText("Make sure both armies have\nunits & you have selected\na battlefield.");
+      winnerTextArea.setText(
+          "Make sure both armies have\nunits & you have selected\na battlefield."
+      );
     }
   }
 
