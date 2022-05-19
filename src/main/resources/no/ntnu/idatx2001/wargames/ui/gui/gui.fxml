@@ -115,7 +115,7 @@
                                  </GridPane.margin>
                               </Text>
                               <Button mnemonicParsing="false" onAction="#addArmyOneUnit" text="Add units" GridPane.halignment="CENTER" GridPane.rowIndex="5" GridPane.valignment="CENTER" />
-                              <Button mnemonicParsing="false" text="Save Army 1" GridPane.halignment="CENTER" GridPane.rowIndex="7" GridPane.valignment="CENTER" />
+                              <Button fx:id="saveArmyOneButton" disable="true" mnemonicParsing="false" onAction="#saveArmyOneToFile" text="Save Army 1" GridPane.halignment="CENTER" GridPane.rowIndex="7" GridPane.valignment="CENTER" />
                   </children>
                 </GridPane>
                 <GridPane alignment="CENTER" prefHeight="230.0" prefWidth="140.0" GridPane.columnIndex="2" GridPane.halignment="CENTER" GridPane.rowIndex="1" GridPane.valignment="CENTER">
@@ -157,7 +157,7 @@
                                     <Insets left="20.0" />
                                  </GridPane.margin>
                               </Text>
-                              <Button mnemonicParsing="false" text="Save Army 2" GridPane.halignment="CENTER" GridPane.rowIndex="7" GridPane.valignment="CENTER" />
+                              <Button fx:id="saveArmyTwoButton" disable="true" mnemonicParsing="false" onAction="#saveArmyTwoToFile" text="Save Army 2" GridPane.halignment="CENTER" GridPane.rowIndex="7" GridPane.valignment="CENTER" />
                               <Button mnemonicParsing="false" onAction="#addArmyTwoUnit" text="Add units" GridPane.halignment="CENTER" GridPane.rowIndex="5" GridPane.valignment="CENTER" />
                   </children>
                 </GridPane>

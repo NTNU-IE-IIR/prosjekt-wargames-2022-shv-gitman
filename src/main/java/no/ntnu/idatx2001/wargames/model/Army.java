@@ -2,10 +2,7 @@ package no.ntnu.idatx2001.wargames.model;
 
 import no.ntnu.idatx2001.wargames.model.units.*;
 
-import java.io.BufferedReader;
-import java.io.FileReader;
-import java.io.FileWriter;
-import java.io.IOException;
+import java.io.*;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
@@ -15,27 +12,27 @@ import java.util.Random;
  * Represents an army with a list of units.
  */
 public class Army {
-  private final String name;
+  private final String armyName;
   private List<Unit> units = new ArrayList<>();
   private final Random random = new Random();
 
   /**
    * Creates an empty army.
    *
-   * @param name the name of the army.
+   * @param armyName the name of the army.
    */
-  public Army(String name) {
-    this.name = name;
+  public Army(String armyName) {
+    this.armyName = armyName;
   }
 
   /**
    * Creates an army with an existing list of units.
    *
-   * @param name  the name of the army.
+   * @param armyName  the name of the army.
    * @param units the list of units.
    */
-  public Army(String name, List<Unit> units) {
-    this.name = name;
+  public Army(String armyName, List<Unit> units) {
+    this.armyName = armyName;
     this.units = units;
   }
 
@@ -226,14 +223,14 @@ public class Army {
    * @param filename name of file
    * @return saveStatus, true if successfully saved army to a file, false if not.
    */
-  public boolean saveArmyToFile(String filename) {
+  public static boolean saveArmyToFile(String filename, Army army) {
     boolean saveStatus = false;
     try {
-      FileWriter file = new FileWriter(filename);
+      FileWriter file = new FileWriter(new File("army-templates/", filename + ".csv"));
 
-      file.write(this.name + "\n");
+      file.write(army.getName() + "\n");
 
-      for (Unit unit : this.units) {
+      for (Unit unit : army.getAllUnits()) {
         file.write(unit.getClass().getSimpleName() + ","
             + unit.getName() + ","
             + unit.getHealth() + "\n");
@@ -252,7 +249,7 @@ public class Army {
    * @return name of Army
    */
   public String getName() {
-    return name;
+    return armyName;
   }
 
   /**
@@ -262,7 +259,7 @@ public class Army {
    */
   @Override
   public String toString() {
-    return "name='" + name + '\''
+    return "name='" + armyName + '\''
         + ", units=" + getAmountOfUnits();
   }
 
@@ -282,7 +279,7 @@ public class Army {
       return false;
     }
     Army army = (Army) o;
-    return Objects.equals(name, army.name) && Objects.equals(units, army.units);
+    return Objects.equals(armyName, army.armyName) && Objects.equals(units, army.units);
   }
 
   /**
@@ -292,6 +289,6 @@ public class Army {
    */
   @Override
   public int hashCode() {
-    return Objects.hash(name, units);
+    return Objects.hash(armyName, units);
   }
 }

@@ -8,9 +8,7 @@ import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
-import javafx.scene.control.Button;
-import javafx.scene.control.ListView;
-import javafx.scene.control.TextArea;
+import javafx.scene.control.*;
 import javafx.scene.text.Text;
 import javafx.stage.FileChooser;
 import javafx.stage.Stage;
@@ -57,6 +55,10 @@ public class MainPageController {
   private Button viewArmyOneButton;
   @FXML
   private Button viewArmyTwoButton;
+  @FXML
+  private Button saveArmyOneButton;
+  @FXML
+  private Button saveArmyTwoButton;
 
   @FXML
   protected void startSimulation(ActionEvent actionEvent) {
@@ -111,11 +113,13 @@ public class MainPageController {
   @FXML
   protected void loadArmyOne(ActionEvent actionEvent) {
     loadArmyButton("armyOne", viewArmyOneButton, fileOneText, armyOneText);
+    saveArmyOneButton.setDisable(false);
   }
 
   @FXML
   protected void loadArmyTwo(ActionEvent actionEvent) {
     loadArmyButton("armyTwo", viewArmyTwoButton, fileTwoText, armyTwoText);
+    saveArmyTwoButton.setDisable(false);
   }
 
   @FXML
@@ -149,6 +153,28 @@ public class MainPageController {
   protected void armyTwoUnitInfoButton(ActionEvent actionEvent) {
     ViewArmyDialog viewArmyDialog = new ViewArmyDialog(armyTwo);
     viewArmyDialog.showAndWait();
+  }
+
+  @FXML
+  protected void saveArmyOneToFile(ActionEvent actionEvent) {
+    if (saveConfirmationAlert(armyOne)) {
+      if (Army.saveArmyToFile(armyOne.getName(), armyOne)) {
+        saveSuccessAlert(armyOne);
+      } else {
+        saveErrorAlert();
+      }
+    }
+  }
+
+  @FXML
+  protected void saveArmyTwoToFile(ActionEvent actionEvent) {
+    if (saveConfirmationAlert(armyTwo)) {
+      if (Army.saveArmyToFile(armyTwo.getName(), armyTwo)) {
+        saveSuccessAlert(armyTwo);
+      } else {
+        saveErrorAlert();
+      }
+    }
   }
 
   @FXML
@@ -276,5 +302,57 @@ public class MainPageController {
       units.addAll(army.getArtilleryUnits());
     }
     return units;
+  }
+
+  /**
+   * Presents the user with a confirmation dialog to save or not save the army.
+   *
+   * @param army army to save
+   * @return save confirmation, true if yes-button is pressed, false if not
+   */
+  private boolean saveConfirmationAlert(Army army) {
+    boolean saveConfirmation = false;
+
+    Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
+    alert.setTitle("Save confirmation");
+    alert.setHeaderText("Save confirmation");
+    alert.setContentText("Are you sure you want to save " + army.getName() + "?");
+
+    Button yesButton = (Button) alert.getDialogPane().lookupButton(ButtonType.OK);
+    Button noButton = (Button) alert.getDialogPane().lookupButton(ButtonType.CANCEL);
+    yesButton.setText("Yes");
+    noButton.setText("No");
+
+    Optional<ButtonType> result = alert.showAndWait();
+
+    if (result.isPresent()) {
+      saveConfirmation = (result.get() == ButtonType.OK);
+    }
+
+    return saveConfirmation;
+  }
+
+  /**
+   * Presents an alert to the user when an army is successfully saved.
+   *
+   * @param army army that has been saved
+   */
+  private void saveSuccessAlert(Army army) {
+    Alert alert = new Alert(Alert.AlertType.INFORMATION);
+    alert.setTitle("Save army: " + army.getName());
+    alert.setHeaderText("Save Successful!");
+    alert.setContentText(armyOne.getName() + " was successfully saved to the army-template directory");
+    alert.showAndWait();
+  }
+
+  /**
+   * Alert the user if there is an error in saving the army.
+   */
+  private void saveErrorAlert() {
+    Alert alert = new Alert(Alert.AlertType.INFORMATION);
+    alert.setTitle("ERROR");
+    alert.setHeaderText("Save Error!");
+    alert.setContentText("There was an error when saving the army.");
+    alert.showAndWait();
   }
 }
