@@ -1,0 +1,280 @@
+package no.ntnu.idatx2001.wargames.ui;
+
+import java.io.File;
+import java.util.List;
+import java.util.Optional;
+
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
+import javafx.event.ActionEvent;
+import javafx.fxml.FXML;
+import javafx.scene.control.Button;
+import javafx.scene.control.ListView;
+import javafx.scene.control.TextArea;
+import javafx.scene.text.Text;
+import javafx.stage.FileChooser;
+import javafx.stage.Stage;
+import no.ntnu.idatx2001.wargames.model.Army;
+import no.ntnu.idatx2001.wargames.model.Battle;
+import no.ntnu.idatx2001.wargames.ui.dialog.AddUnitDialog;
+import no.ntnu.idatx2001.wargames.ui.dialog.ViewArmyDialog;
+import no.ntnu.idatx2001.wargames.model.units.*;
+
+/**
+ * Responsible for handling the GUI-interaction from the user.
+ */
+public class MainPageController {
+
+  private Army armyOne;
+  private Army armyTwo;
+  private Army placeHolderArmyOne;
+  private Army placeHolderArmyTwo;
+  // Sets default terrain to forest
+  private String terrain = "FOREST";
+  private File armyFileOne;
+  private File armyFileTwo;
+  private ObservableList<Unit> observableList;
+
+  @FXML
+  private Text fileOneText;
+  @FXML
+  private Text fileTwoText;
+  @FXML
+  private Text armyOneText;
+  @FXML
+  private Text armyTwoText;
+  @FXML
+  private ListView<String> armyTwoListView;
+  @FXML
+  private ListView<String> armyOneListView;
+  @FXML
+  private Button restartSimulationButton;
+  @FXML
+  private TextArea battleFieldTextArea;
+  @FXML
+  private Text terrainTextField;
+  @FXML
+  private Button viewArmyOneButton;
+  @FXML
+  private Button viewArmyTwoButton;
+
+  @FXML
+  protected void startSimulation(ActionEvent actionEvent) {
+    if (armyOne != null && armyTwo != null && armyOne.hasUnits()
+        && armyTwo.hasUnits() && !(terrain.equals(""))) {
+      Battle battle;
+
+      // Determines who attacks first
+      double order = Math.random();
+      if (order < 0.5) {
+        battle = new Battle(armyOne, armyTwo, terrain);
+      } else {
+        battle = new Battle(armyTwo, armyOne, terrain);
+      }
+
+      Army winner = battle.simulate();
+      updateArmyListView(armyOneListView, armyOne);
+      updateArmyListView(armyTwoListView, armyTwo);
+
+      battleFieldTextArea.setText(winner.getName());
+      restartSimulationButton.setDisable(false);
+    } else {
+      battleFieldTextArea.setText(
+          "Make sure both armies have\nunits & you have selected\na battlefield."
+      );
+    }
+  }
+
+  @FXML
+  protected void restartSimulation(ActionEvent actionEvent) {
+    restartSimulationButton.setDisable(true);
+    battleFieldTextArea.setText("winner");
+
+    if (armyFileOne != null) {
+      this.armyOne.getAllUnits().clear();
+      this.armyOne = Army.uploadArmyFromFile(armyFileOne.toString());
+    } else {
+      this.armyOne = placeHolderArmyOne;
+    }
+
+    if (armyFileTwo != null) {
+      this.armyTwo.getAllUnits().clear();
+      this.armyTwo = Army.uploadArmyFromFile(armyFileTwo.toString());
+    } else {
+      this.armyTwo = placeHolderArmyTwo;
+    }
+
+    updateArmyListView(armyOneListView, armyOne);
+    updateArmyListView(armyTwoListView, armyTwo);
+  }
+
+  @FXML
+  protected void loadArmyOne(ActionEvent actionEvent) {
+    loadArmyButton("armyOne", viewArmyOneButton, fileOneText, armyOneText);
+  }
+
+  @FXML
+  protected void loadArmyTwo(ActionEvent actionEvent) {
+    loadArmyButton("armyTwo", viewArmyTwoButton, fileTwoText, armyTwoText);
+  }
+
+  @FXML
+  public void addArmyOneUnit(ActionEvent actionEvent) {
+    this.armyOne = addUnits(
+        armyOne, armyOneListView, viewArmyOneButton, armyOneText, 1
+    );
+    if (!armyOne.getAllUnits().isEmpty()) {
+      this.placeHolderArmyOne = armyOne;
+    }
+  }
+
+  @FXML
+  public void addArmyTwoUnit(ActionEvent actionEvent) {
+    this.armyTwo = addUnits(
+        armyTwo, armyTwoListView, viewArmyTwoButton, armyTwoText, 2
+    );
+
+    if (!armyTwo.getAllUnits().isEmpty()) {
+      this.placeHolderArmyTwo = armyTwo;
+    }
+  }
+
+  @FXML
+  protected void armyOneUnitInfoButton(ActionEvent actionEvent) {
+    ViewArmyDialog viewArmyDialog = new ViewArmyDialog(armyOne);
+    viewArmyDialog.showAndWait();
+  }
+
+  @FXML
+  protected void armyTwoUnitInfoButton(ActionEvent actionEvent) {
+    ViewArmyDialog viewArmyDialog = new ViewArmyDialog(armyTwo);
+    viewArmyDialog.showAndWait();
+  }
+
+  @FXML
+  protected void changeTerrain(ActionEvent actionEvent) {
+    String id = actionEvent.toString();
+
+    if (id.contains("FORESTmenuItem")) {
+      this.terrain = "FOREST";
+      terrainTextField.setText("Terrain: FOREST");
+    } else if (id.contains("HILLmenuItem")) {
+      this.terrain = "HILL";
+      terrainTextField.setText("Terrain: HILL");
+    } else if (id.contains("PLAINSmenuItem")) {
+      this.terrain = "PLAINS";
+      terrainTextField.setText("Terrain: PLAINS");
+    }
+  }
+
+  /**
+   * Loads an army of units from a text file.
+   *
+   * @param currentArmy Army where units will be added.
+   * @param button      button to enable after army is loaded.
+   * @param fileText    Text to print which file has been loaded.
+   * @param armyText    Text to print which army has been loaded.
+   */
+  private void loadArmyButton(String currentArmy, Button button, Text fileText, Text armyText) {
+    FileChooser fileChooser = new FileChooser();
+    Stage fileStage = new Stage();
+    File armyFile = fileChooser.showOpenDialog(fileStage);
+
+    if (armyFile != null) {
+      if (currentArmy.equals("armyOne")) {
+        armyOne = Army.uploadArmyFromFile(armyFile.toString());
+        armyFileOne = armyFile;
+        fileText.setText("Loaded: " + armyFile.getName());
+        armyText.setText("Name: " + armyOne.getName());
+        updateArmyListView(armyOneListView, armyOne);
+      } else {
+        armyTwo = Army.uploadArmyFromFile(armyFile.toString());
+        armyFileTwo = armyFile;
+        fileText.setText("Loaded: " + armyFile.getName());
+        armyText.setText("Name: " + armyTwo.getName());
+        updateArmyListView(armyTwoListView, armyTwo);
+      }
+      button.setDisable(false);
+    } else {
+      fileText.setText("Loaded: No file found");
+    }
+  }
+
+  /**
+   * Presents user with a Dialog Pane to add units to an army.
+   *
+   * @param army       army to add units to
+   * @param listView   list view to present units with
+   * @param button     button to view info about units in army
+   * @param armyNumber army number
+   */
+  private Army addUnits(
+      Army army, ListView<String> listView, Button button, Text armyTextName, int armyNumber
+  ) {
+    AddUnitDialog addUnitDialog = new AddUnitDialog();
+    Optional<List<Unit>> result = addUnitDialog.showAndWait();
+
+    if (army == null) {
+      army = new Army("Army " + armyNumber);
+    }
+
+    button.setDisable(false);
+
+    if (result.isPresent()) {
+      List<Unit> units = result.get();
+      if (!units.isEmpty()) {
+        army.addAll(units);
+        updateArmyListView(listView, army);
+        armyTextName.setText("Name: " + army.getName());
+      }
+    }
+
+    return army;
+  }
+
+  /**
+   * Method to update list view with unit information about an army.
+   *
+   * @param listView the list to put info into
+   * @param army     army to be put in list
+   */
+  private void updateArmyListView(ListView<String> listView, Army army) {
+    listView.getItems().clear();
+
+    // Displays amount of units in List View.
+    listView.getItems().add("Units: " + army.getAmountOfUnits());
+    listView.getItems().add("Commander units: " + army.getCommanderUnits().size());
+    listView.getItems().add("Infantry units: " + army.getInfantryUnits().size());
+    listView.getItems().add("Ranged units: " + army.getRangedUnits().size());
+    listView.getItems().add("Cavalry units: " + army.getCavalryUnits().size());
+    listView.getItems().add("Artillery units: " + army.getArtilleryUnits().size());
+  }
+
+  /**
+   * An observable list of units.
+   *
+   * @param army the army to get units from.
+   * @param unit the type of unit.
+   * @return an observable list of units of a specific type.
+   */
+  public static ObservableList<Unit> getUnits(Army army, Unit unit) {
+    ObservableList<Unit> units = FXCollections.observableArrayList();
+
+    if (unit instanceof CommanderUnit) {
+      units.addAll(army.getCommanderUnits());
+    }
+    if (unit instanceof InfantryUnit) {
+      units.addAll(army.getInfantryUnits());
+    }
+    if (unit instanceof RangedUnit) {
+      units.addAll(army.getRangedUnits());
+    }
+    if (unit instanceof CavalryUnit && !(unit instanceof CommanderUnit)) {
+      units.addAll(army.getCavalryUnits());
+    }
+    if (unit instanceof ArtilleryUnit) {
+      units.addAll(army.getArtilleryUnits());
+    }
+    return units;
+  }
+}

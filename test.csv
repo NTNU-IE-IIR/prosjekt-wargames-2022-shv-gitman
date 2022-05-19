@@ -1,5 +1,5 @@
 Test army
-CommanderUnit,Mountain King,180
+CommanderUnit,King,140
 InfantryUnit,Footman,100
 InfantryUnit,Footman,100
 InfantryUnit,Footman,100
@@ -20,13 +20,23 @@ RangedUnit,Archer,100
 RangedUnit,Archer,100
 RangedUnit,Archer,100
 RangedUnit,Archer,100
-CavalryUnit,Cavalry,100
-CavalryUnit,Cavalry,100
-CavalryUnit,Cavalry,100
-CavalryUnit,Cavalry,100
-CavalryUnit,Cavalry,100
-CavalryUnit,Cavalry,100
-CavalryUnit,Cavalry,100
-CavalryUnit,Cavalry,100
-CavalryUnit,Cavalry,100
-CavalryUnit,Cavalry,100
+CavalryUnit,Knight,100
+CavalryUnit,Knight,100
+CavalryUnit,Knight,100
+CavalryUnit,Knight,100
+CavalryUnit,Knight,100
+CavalryUnit,Knight,100
+CavalryUnit,Knight,100
+CavalryUnit,Knight,100
+CavalryUnit,Knight,100
+CavalryUnit,Knight,100
+ArtilleryUnit,Scorpion,40
+ArtilleryUnit,Scorpion,40
+ArtilleryUnit,Scorpion,40
+ArtilleryUnit,Scorpion,40
+ArtilleryUnit,Scorpion,40
+ArtilleryUnit,Scorpion,40
+ArtilleryUnit,Scorpion,40
+ArtilleryUnit,Scorpion,40
+ArtilleryUnit,Scorpion,40
+ArtilleryUnit,Scorpion,40
