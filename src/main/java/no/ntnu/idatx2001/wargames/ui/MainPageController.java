@@ -25,13 +25,10 @@ public class MainPageController {
 
   private Army armyOne;
   private Army armyTwo;
-  private Army placeHolderArmyOne;
-  private Army placeHolderArmyTwo;
+  private Army placeHolderArmyOne = new Army("");
+  private Army placeHolderArmyTwo = new Army("");
   // Sets default terrain to forest
   private String terrain = "FOREST";
-  private File armyFileOne;
-  private File armyFileTwo;
-  private ObservableList<Unit> observableList;
 
   @FXML
   private Text fileOneText;
@@ -92,19 +89,8 @@ public class MainPageController {
     restartSimulationButton.setDisable(true);
     battleFieldTextArea.setText("winner");
 
-    if (armyFileOne != null) {
-      this.armyOne.getAllUnits().clear();
-      this.armyOne = Army.uploadArmyFromFile(armyFileOne.toString());
-    } else {
-      this.armyOne = placeHolderArmyOne;
-    }
-
-    if (armyFileTwo != null) {
-      this.armyTwo.getAllUnits().clear();
-      this.armyTwo = Army.uploadArmyFromFile(armyFileTwo.toString());
-    } else {
-      this.armyTwo = placeHolderArmyTwo;
-    }
+    this.armyOne.copy(placeHolderArmyOne);
+    this.armyTwo.copy(placeHolderArmyTwo);
 
     updateArmyListView(armyOneListView, armyOne);
     updateArmyListView(armyTwoListView, armyTwo);
@@ -112,14 +98,18 @@ public class MainPageController {
 
   @FXML
   protected void loadArmyOne(ActionEvent actionEvent) {
-    loadArmyButton("armyOne", viewArmyOneButton, fileOneText, armyOneText);
-    saveArmyOneButton.setDisable(false);
+    loadArmyButton("armyOne", viewArmyOneButton, saveArmyOneButton, fileOneText, armyOneText);
+    if (armyOne != null) {
+      this.placeHolderArmyOne.copy(armyOne);
+    }
   }
 
   @FXML
   protected void loadArmyTwo(ActionEvent actionEvent) {
-    loadArmyButton("armyTwo", viewArmyTwoButton, fileTwoText, armyTwoText);
-    saveArmyTwoButton.setDisable(false);
+    loadArmyButton("armyTwo", viewArmyTwoButton, saveArmyTwoButton, fileTwoText, armyTwoText);
+    if (armyTwo != null) {
+      this.placeHolderArmyTwo.copy(armyTwo);
+    }
   }
 
   @FXML
@@ -128,7 +118,7 @@ public class MainPageController {
         armyOne, armyOneListView, viewArmyOneButton, armyOneText, 1
     );
     if (!armyOne.getAllUnits().isEmpty()) {
-      this.placeHolderArmyOne = armyOne;
+      this.placeHolderArmyOne.copy(armyOne);
     }
   }
 
@@ -137,9 +127,8 @@ public class MainPageController {
     this.armyTwo = addUnits(
         armyTwo, armyTwoListView, viewArmyTwoButton, armyTwoText, 2
     );
-
     if (!armyTwo.getAllUnits().isEmpty()) {
-      this.placeHolderArmyTwo = armyTwo;
+      this.placeHolderArmyTwo.copy(armyTwo);
     }
   }
 
@@ -195,13 +184,15 @@ public class MainPageController {
 
   /**
    * Loads an army of units from a text file.
+   * TODO: Duplicate code
    *
-   * @param currentArmy Army where units will be added.
-   * @param button      button to enable after army is loaded.
-   * @param fileText    Text to print which file has been loaded.
-   * @param armyText    Text to print which army has been loaded.
+   * @param currentArmy    Army where units will be added.
+   * @param viewUnitButton view-unit-button to enable after army is loaded.
+   * @param saveButton     save-army-button to enable after army is loaded.
+   * @param fileText       Text to print which file has been loaded.
+   * @param armyText       Text to print which army has been loaded.
    */
-  private void loadArmyButton(String currentArmy, Button button, Text fileText, Text armyText) {
+  private void loadArmyButton(String currentArmy, Button viewUnitButton, Button saveButton, Text fileText, Text armyText) {
     FileChooser fileChooser = new FileChooser();
     Stage fileStage = new Stage();
     File armyFile = fileChooser.showOpenDialog(fileStage);
@@ -209,18 +200,17 @@ public class MainPageController {
     if (armyFile != null) {
       if (currentArmy.equals("armyOne")) {
         armyOne = Army.uploadArmyFromFile(armyFile.toString());
-        armyFileOne = armyFile;
         fileText.setText("Loaded: " + armyFile.getName());
         armyText.setText("Name: " + armyOne.getName());
         updateArmyListView(armyOneListView, armyOne);
       } else {
         armyTwo = Army.uploadArmyFromFile(armyFile.toString());
-        armyFileTwo = armyFile;
         fileText.setText("Loaded: " + armyFile.getName());
         armyText.setText("Name: " + armyTwo.getName());
         updateArmyListView(armyTwoListView, armyTwo);
       }
-      button.setDisable(false);
+      viewUnitButton.setDisable(false);
+      saveButton.setDisable(false);
     } else {
       fileText.setText("Loaded: No file found");
     }
@@ -244,14 +234,13 @@ public class MainPageController {
       army = new Army("Army " + armyNumber);
     }
 
-    button.setDisable(false);
-
     if (result.isPresent()) {
       List<Unit> units = result.get();
       if (!units.isEmpty()) {
         army.addAll(units);
         updateArmyListView(listView, army);
         armyTextName.setText("Name: " + army.getName());
+        button.setDisable(false);
       }
     }
 

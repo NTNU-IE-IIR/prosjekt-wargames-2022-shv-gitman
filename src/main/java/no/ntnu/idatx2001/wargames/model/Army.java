@@ -12,7 +12,7 @@ import java.util.Random;
  * Represents an army with a list of units.
  */
 public class Army {
-  private final String armyName;
+  private String armyName;
   private List<Unit> units = new ArrayList<>();
   private final Random random = new Random();
 
@@ -34,6 +34,27 @@ public class Army {
   public Army(String armyName, List<Unit> units) {
     this.armyName = armyName;
     this.units = units;
+  }
+
+  /**
+   * Creates a clone of an army.
+   *
+   * @param army army to clone
+   */
+  public Army(Army army) {
+    this.armyName = army.armyName;
+    this.units = army.units;
+  }
+
+  /**
+   * Copies army values from another Army.
+   *
+   * @param army Army to copy
+   */
+  public void copy(Army army) {
+    this.units.clear();
+    this.setArmyName(army.getName());
+    this.addAll(army.getAllUnits());
   }
 
   /**
@@ -253,6 +274,16 @@ public class Army {
   }
 
   /**
+   * Sets Army name.
+   *
+   * @param armyName name to give Army
+   */
+  public void setArmyName(String armyName) {
+    this.armyName = armyName;
+  }
+
+
+  /**
    * Returns a string representing the whole army.
    *
    * @return a string representing the whole army.
@@ -289,6 +320,6 @@ public class Army {
    */
   @Override
   public int hashCode() {
-    return Objects.hash(armyName, units);
+    return Objects.hash(this);
   }
 }
