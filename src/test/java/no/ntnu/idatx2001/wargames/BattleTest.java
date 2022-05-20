@@ -35,8 +35,8 @@ public class BattleTest {
 
   @Test
   public void testBattleSimulationWithArmyFromTextFile() {
-    Army orcArmy = Army.uploadArmyFromFile("orc-army.csv");
-    Army humanArmy = Army.uploadArmyFromFile("human-army.csv");
+    Army orcArmy = Army.uploadArmyFromFile("army-templates/Orc Army.csv");
+    Army humanArmy = Army.uploadArmyFromFile("army-templates/Human army.csv");
 
     Battle battle = new Battle(orcArmy, humanArmy, "PLAINS");
 
