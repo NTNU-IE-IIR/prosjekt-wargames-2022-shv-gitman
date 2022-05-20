@@ -97,12 +97,9 @@ public abstract class Unit {
 
     // Only attacks if the attack is higher than opponents defence
     if ((this.attack + attackBonus) > (opponent.getArmor() + resistBonus)) {
-      opponent.setHealth(opponent.getHealth() - (this.attack + attackBonus) + (opponent.getArmor() + resistBonus));
-    } else {
-      // System.out.println(
-      // getName() + " doesnt have enough attack (" + (attack + attackBonus) + ") to do anything against "
-      // + opponent.getName() + " (" + (opponent.getArmor() + opponent.getResistBonus()) + ")"
-      // );
+      opponent.setHealth(
+          opponent.getHealth() - (this.attack + attackBonus) + (opponent.getArmor() + resistBonus)
+      );
     }
   }
 

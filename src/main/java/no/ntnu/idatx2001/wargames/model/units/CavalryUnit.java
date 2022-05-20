@@ -49,16 +49,32 @@ public class CavalryUnit extends Unit {
     return 1;
   }
 
+  /**
+   * Returns the hill modifier.
+   *
+   * @return hill modifier
+   */
   @Override
   public int getHillModifier() {
     return 0;
   }
 
+  /**
+   * Returns the plains modifier.
+   *
+   * @return plains modifier
+   */
   @Override
   public int getPlainsModifier() {
     return 6;
   }
 
+  /**
+   * Returns the forest modifier.
+   * Removes resistance bonus when in a forest
+   *
+   * @return forest modifier
+   */
   @Override
   public int getForestModifier() {
     return -getResistBonus();

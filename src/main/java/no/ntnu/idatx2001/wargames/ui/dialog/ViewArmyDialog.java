@@ -1,5 +1,6 @@
 package no.ntnu.idatx2001.wargames.ui.dialog;
 
+import java.io.IOException;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
@@ -12,11 +13,9 @@ import no.ntnu.idatx2001.wargames.model.Army;
 import no.ntnu.idatx2001.wargames.model.units.*;
 import no.ntnu.idatx2001.wargames.ui.MainPageController;
 
-import java.io.IOException;
-
 public class ViewArmyDialog extends Dialog<Army> {
 
-  private Army currentArmy;
+  private final Army currentArmy;
 
   @FXML
   private Text textHeader;
@@ -104,23 +103,28 @@ public class ViewArmyDialog extends Dialog<Army> {
     armorTableColumn.setCellValueFactory(new PropertyValueFactory<>("attack"));
     attackTableColumn.setCellValueFactory(new PropertyValueFactory<>("armor"));
 
-    if (unitTypeCB.getValue().equals("Commander Unit") && !(currentArmy.getCommanderUnits().isEmpty())) {
+    if (unitTypeCB.getValue().equals("Commander Unit")
+        && !(currentArmy.getCommanderUnits().isEmpty())) {
       unitTableView.setItems(
           getObservableList(currentArmy, currentArmy.getCommanderUnits().get(0))
       );
-    } else if (unitTypeCB.getValue().equals("Infantry Unit") && !(currentArmy.getInfantryUnits().isEmpty())) {
+    } else if (unitTypeCB.getValue().equals("Infantry Unit")
+        && !(currentArmy.getInfantryUnits().isEmpty())) {
       unitTableView.setItems(
           getObservableList(currentArmy, currentArmy.getInfantryUnits().get(0))
       );
-    } else if (unitTypeCB.getValue().equals("Ranged Unit") && !(currentArmy.getRangedUnits().isEmpty())) {
+    } else if (unitTypeCB.getValue().equals("Ranged Unit")
+        && !(currentArmy.getRangedUnits().isEmpty())) {
       unitTableView.setItems(
           getObservableList(currentArmy, currentArmy.getRangedUnits().get(0))
       );
-    } else if (unitTypeCB.getValue().equals("Cavalry Unit") && !(currentArmy.getCavalryUnits().isEmpty())) {
+    } else if (unitTypeCB.getValue().equals("Cavalry Unit")
+        && !(currentArmy.getCavalryUnits().isEmpty())) {
       unitTableView.setItems(
           getObservableList(currentArmy, currentArmy.getCavalryUnits().get(0))
       );
-    } else if (unitTypeCB.getValue().equals("Artillery Unit") && !(currentArmy.getArtilleryUnits().isEmpty())) {
+    } else if (unitTypeCB.getValue().equals("Artillery Unit")
+        && !(currentArmy.getArtilleryUnits().isEmpty())) {
       unitTableView.setItems(
           getObservableList(currentArmy, currentArmy.getArtilleryUnits().get(0))
       );

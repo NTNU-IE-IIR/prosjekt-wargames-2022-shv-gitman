@@ -3,7 +3,6 @@ package no.ntnu.idatx2001.wargames.ui;
 import java.io.File;
 import java.util.List;
 import java.util.Optional;
-
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
@@ -14,9 +13,9 @@ import javafx.stage.FileChooser;
 import javafx.stage.Stage;
 import no.ntnu.idatx2001.wargames.model.Army;
 import no.ntnu.idatx2001.wargames.model.Battle;
+import no.ntnu.idatx2001.wargames.model.units.*;
 import no.ntnu.idatx2001.wargames.ui.dialog.AddUnitDialog;
 import no.ntnu.idatx2001.wargames.ui.dialog.ViewArmyDialog;
-import no.ntnu.idatx2001.wargames.model.units.*;
 
 /**
  * Responsible for handling the GUI-interaction from the user.
@@ -70,12 +69,10 @@ public class MainPageController {
    */
   @FXML
   public void initialize() {
-    armyOneNameTextField.textProperty().addListener((observable, oldValue, newValue) -> {
-      armyOne.setArmyName(newValue);
-    });
-    armyTwoNameTextField.textProperty().addListener((observable, oldValue, newValue) -> {
-      armyTwo.setArmyName(newValue);
-    });
+    armyOneNameTextField.textProperty().addListener((observable, oldValue, newValue)
+        -> armyOne.setArmyName(newValue));
+    armyTwoNameTextField.textProperty().addListener((observable, oldValue, newValue)
+        -> armyTwo.setArmyName(newValue));
   }
 
   /**

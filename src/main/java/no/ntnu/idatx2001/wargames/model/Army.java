@@ -1,12 +1,11 @@
 package no.ntnu.idatx2001.wargames.model;
 
-import no.ntnu.idatx2001.wargames.model.units.*;
-
 import java.io.*;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 import java.util.Random;
+import no.ntnu.idatx2001.wargames.model.units.*;
 
 /**
  * Represents an army with a list of units.
@@ -34,17 +33,6 @@ public class Army {
   public Army(String armyName, List<Unit> units) {
     this.armyName = armyName;
     this.units = units;
-  }
-
-  /**
-   * Copies army values from another Army.
-   *
-   * @param army Army to copy
-   */
-  public void copy(Army army) {
-    this.units.clear();
-    this.setArmyName(army.getName());
-    this.addAll(army.getAllUnits());
   }
 
   /**
@@ -189,7 +177,7 @@ public class Army {
 
   /**
    * Creates an army from a text file.
-   * Uses the UnitFactory class to create a new unit from a split String.
+   * Uses the UnitFactory Class to create a new unit from a split String.
    *
    * @param filename name of file.
    * @return an army.
@@ -211,7 +199,9 @@ public class Army {
           String[] currentLine = line.split(",");
 
           if (!(currentLine[2].equals("null"))) {
-            Unit newUnit = unitFactory.createUnit(currentLine[0], currentLine[1], Integer.parseInt(currentLine[2]));
+            Unit newUnit = unitFactory.createUnit(
+                currentLine[0], currentLine[1], Integer.parseInt(currentLine[2])
+            );
             units.add(newUnit);
           } else {
             System.out.println("Health was null at line: " + currentLineNumber + " in " + filename);
@@ -281,12 +271,11 @@ public class Army {
    *
    * @return a string representing the whole army.
    */
-  /*
   @Override
   public String toString() {
     return "name='" + armyName + '\''
         + ", units=" + getAmountOfUnits();
-  }*/
+  }
 
   /**
    * Checks if the army is the same as another army.
@@ -295,7 +284,6 @@ public class Army {
    * @param o the object to be checked if it is the same as this army.
    * @return true if the object is the same as this army, false if not.
    */
-  /*
   @Override
   public boolean equals(Object o) {
     if (this == o) {
@@ -306,7 +294,7 @@ public class Army {
     }
     Army army = (Army) o;
     return Objects.equals(armyName, army.armyName) && Objects.equals(units, army.units);
-  }*/
+  }
 
   /**
    * Returns a hash value of the Army object.

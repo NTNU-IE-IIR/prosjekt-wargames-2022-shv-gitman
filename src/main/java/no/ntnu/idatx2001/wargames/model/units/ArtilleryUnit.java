@@ -49,17 +49,18 @@ public class ArtilleryUnit extends Unit {
   }
 
   /**
-   * Lowers defence when in a hill.
+   * Returns the hill modifier.
    *
-   * @return the value to lower defence by.
+   * @return hill modifier
    */
   public int getHillModifier() {
     return -2;
   }
 
   /**
-   * Gets more attack bonus in plains.
-   * @return additional attack if unit is in plains.
+   * Returns the plains modifier.
+   *
+   * @return plains modifier
    */
   @Override
   public int getPlainsModifier() {
@@ -67,6 +68,7 @@ public class ArtilleryUnit extends Unit {
   }
 
   /**
+   * Returns the forest modifier.
    * Removes all base attack bonus when in a forest.
    *
    * @return the negative of base attack bonus.

@@ -1,16 +1,13 @@
 package no.ntnu.idatx2001.wargames.ui.dialog;
 
+import java.io.IOException;
+import java.util.List;
 import javafx.collections.FXCollections;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.control.*;
-import javafx.scene.text.Text;
-import no.ntnu.idatx2001.wargames.model.Army;
 import no.ntnu.idatx2001.wargames.model.UnitFactory;
 import no.ntnu.idatx2001.wargames.model.units.*;
-
-import java.io.IOException;
-import java.util.List;
 
 public class AddUnitDialog extends Dialog<List<Unit>> {
 

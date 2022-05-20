@@ -49,16 +49,31 @@ public class RangedUnit extends Unit {
     return 2;
   }
 
+  /**
+   * Returns the hill modifier.
+   *
+   * @return hill modifier
+   */
   @Override
   public int getHillModifier() {
     return 2;
   }
 
+  /**
+   * Returns the plains modifier.
+   *
+   * @return plains modifier
+   */
   @Override
   public int getPlainsModifier() {
     return 0;
   }
 
+  /**
+   * Returns the forest modifier.
+   *
+   * @return forest modifier
+   */
   @Override
   public int getForestModifier() {
     return -2;

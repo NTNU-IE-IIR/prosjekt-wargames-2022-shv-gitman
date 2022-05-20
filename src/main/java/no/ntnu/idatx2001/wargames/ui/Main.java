@@ -4,7 +4,6 @@ import java.io.File;
 import java.io.IOException;
 import java.util.Objects;
 import java.util.Optional;
-
 import javafx.application.Application;
 import javafx.event.EventHandler;
 import javafx.fxml.FXMLLoader;
@@ -25,8 +24,7 @@ public class Main extends Application {
   private Stage primaryStage;
 
   /**
-   * Launches the program
-   * ** T O D O **
+   * Launches the application.
    *
    * @param args args.
    */
@@ -39,7 +37,7 @@ public class Main extends Application {
     this.primaryStage = primaryStage;
     primaryStage.setOnCloseRequest(exitApplication);
 
-    Parent root = null;
+    Parent root;
     try {
       root = FXMLLoader.load(Objects.requireNonNull(getClass().getResource("gui/gui.fxml")));
 
@@ -52,7 +50,11 @@ public class Main extends Application {
     }
   }
 
-  private EventHandler<WindowEvent> exitApplication = event -> {
+  /**
+   * Presents the user with a confirmation alert when the user press the exit button.
+   * If the user confirms exit, all temp files are deleted.
+   */
+  private final EventHandler<WindowEvent> exitApplication = event -> {
     Alert closeWindowAlert = new Alert(
         Alert.AlertType.CONFIRMATION, "Are you sure you want to exit Wargames?"
     );
