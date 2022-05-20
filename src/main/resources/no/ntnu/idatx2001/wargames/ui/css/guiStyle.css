@@ -12,7 +12,7 @@
   -fx-border-radius: 8px;
   -fx-border-color: transparent;
   -fx-background-radius: 8px;
-  -fx-background-color: #a6a6a6;
+  -fx-background-color: #b7b7b7;
   -fx-font-size: 13px;
   -fx-font-weight: bold;
 }
@@ -44,4 +44,5 @@
 .list-view, .text-area, .text-field, .menu-button {
   -fx-border-width: 2px;
   -fx-border-color: #1f1f23;
+  -fx-background-color: white;
 }

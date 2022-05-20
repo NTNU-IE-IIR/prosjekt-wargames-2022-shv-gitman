@@ -25,11 +25,12 @@ public class MainPageController {
 
   private Army armyOne = new Army("Army 1");
   private Army armyTwo = new Army("Army 2");
-  private Army placeHolderArmyOne = new Army("");
-  private Army placeHolderArmyTwo = new Army("");
+
+  // Placeholder files.
   private File placeHolderArmyOneFile;
   private File placeHolderArmyTwoFile;
-  // Sets default terrain to forest
+
+  // Sets default terrain to forest.
   private String terrain = "FOREST";
 
   @FXML
@@ -58,7 +59,15 @@ public class MainPageController {
   private TextField armyOneNameTextField;
   @FXML
   private TextField armyTwoNameTextField;
+  @FXML
+  private Button clearArmyOneButton;
+  @FXML
+  private Button clearArmyTwoButton;
 
+  /**
+   * Adds a listener to the army-name TextFields at application initialization to
+   * automatically update the name of each Army.
+   */
   @FXML
   public void initialize() {
     armyOneNameTextField.textProperty().addListener((observable, oldValue, newValue) -> {
@@ -69,6 +78,12 @@ public class MainPageController {
     });
   }
 
+  /**
+   * Starts a battle between armyOne and armyTwo and presents the
+   * user with the result of the battle.
+   *
+   * @param actionEvent event handler
+   */
   @FXML
   protected void startSimulation(ActionEvent actionEvent) {
     if (armyOne != null && armyTwo != null && armyOne.hasUnits()
@@ -83,6 +98,9 @@ public class MainPageController {
         battle = new Battle(armyTwo, armyOne, terrain);
       }
 
+      placeHolderArmyOneFile = saveTempFile(armyOne);
+      placeHolderArmyTwoFile = saveTempFile(armyTwo);
+
       Army winner = battle.simulate();
       updateArmyListView(armyOneListView, armyOne);
       updateArmyListView(armyTwoListView, armyTwo);
@@ -96,6 +114,12 @@ public class MainPageController {
     }
   }
 
+  /**
+   * Restarts the battle, uses the backup .csv files from the
+   * "army-templates/temp" folder to restore the armies.
+   *
+   * @param actionEvent event handler
+   */
   @FXML
   protected void restartSimulation(ActionEvent actionEvent) {
     restartSimulationButton.setDisable(true);
@@ -110,62 +134,98 @@ public class MainPageController {
     updateArmyListView(armyTwoListView, armyTwo);
   }
 
+  /**
+   * Loads an army from a .csv file.
+   * Creates an extra .csv file to store the army for later use.
+   *
+   * @param actionEvent event handler
+   */
   @FXML
   protected void loadArmyOne(ActionEvent actionEvent) {
     loadArmyButton("armyOne", viewArmyOneButton,
-        saveArmyOneButton, fileOneText, armyOneNameTextField
+        saveArmyOneButton, clearArmyOneButton, fileOneText, armyOneNameTextField
     );
-    if (Army.saveArmyToFile(armyOne.getName() + "-temp", armyOne, "army-templates/temp/")) {
-      placeHolderArmyOneFile = new File("army-templates/temp/" + armyOne.getName() + "-temp.csv");
-    }
+    placeHolderArmyOneFile = saveTempFile(armyOne);
   }
 
+  /**
+   * Loads an army from a .csv file.
+   * Creates an extra .csv file to store the army for later use.
+   *
+   * @param actionEvent event handler
+   */
   @FXML
   protected void loadArmyTwo(ActionEvent actionEvent) {
     loadArmyButton("armyTwo", viewArmyTwoButton,
-        saveArmyTwoButton, fileTwoText, armyTwoNameTextField
+        saveArmyTwoButton, clearArmyTwoButton, fileTwoText, armyTwoNameTextField
     );
-    if (Army.saveArmyToFile(armyTwo.getName() + "-temp", armyTwo, "army-templates/temp/")) {
-      placeHolderArmyTwoFile = new File("army-templates/temp/" + armyTwo.getName() + "-temp.csv");
-    }
+    placeHolderArmyTwoFile = saveTempFile(armyTwo);
   }
 
+  /**
+   * Responsible for opening and communicating with the AddUnit Dialog.
+   * Will return a list of units to add to armyOne.
+   * If armyOne has units, it will create an extra .csv file to store the army.
+   *
+   * @param actionEvent event handler
+   */
   @FXML
   public void addArmyOneUnit(ActionEvent actionEvent) {
     this.armyOne = addUnits(
         armyOne, armyOneListView, viewArmyOneButton,
-        saveArmyOneButton, armyOneNameTextField, 1
+        saveArmyOneButton, clearArmyOneButton, armyOneNameTextField, 1
     );
-    if (Army.saveArmyToFile(armyOne.getName() + "-temp", armyOne, "army-templates/temp/")) {
-      placeHolderArmyOneFile = new File("army-templates/temp/" + armyOne.getName() + "-temp.csv");
+    if (this.armyOne.hasUnits()) {
+      placeHolderArmyOneFile = saveTempFile(armyOne);
     }
   }
 
+  /**
+   * Responsible for opening and communicating with the AddUnit Dialog.
+   * Will return a list of units to add to armyTwo.
+   * If armyTwo has units, it will create an extra .csv file to store the army.
+   *
+   * @param actionEvent event handler
+   */
   @FXML
   public void addArmyTwoUnit(ActionEvent actionEvent) {
     this.armyTwo = addUnits(
         armyTwo, armyTwoListView, viewArmyTwoButton,
-        saveArmyTwoButton, armyTwoNameTextField, 2
+        saveArmyTwoButton, clearArmyTwoButton, armyTwoNameTextField, 2
     );
-    if (Army.saveArmyToFile(armyTwo.getName() + "-temp", armyTwo, "army-templates/temp/")) {
-      placeHolderArmyTwoFile = new File("army-templates/temp/" + armyTwo.getName() + "-temp.csv");
+    if (this.armyTwo.hasUnits()) {
+      placeHolderArmyTwoFile = saveTempFile(armyTwo);
     }
   }
 
+  /**
+   * Responsible for opening the ViewArmy Dialog.
+   *
+   * @param actionEvent event handler
+   */
   @FXML
   protected void armyOneUnitInfoButton(ActionEvent actionEvent) {
-    System.out.println(armyOne.getAmountOfUnits());
     ViewArmyDialog viewArmyDialog = new ViewArmyDialog(armyOne);
     viewArmyDialog.showAndWait();
   }
 
+  /**
+   * Responsible for opening the ViewArmy Dialog.
+   *
+   * @param actionEvent event handler
+   */
   @FXML
   protected void armyTwoUnitInfoButton(ActionEvent actionEvent) {
-    System.out.println(armyTwo.getAmountOfUnits());
     ViewArmyDialog viewArmyDialog = new ViewArmyDialog(armyTwo);
     viewArmyDialog.showAndWait();
   }
 
+  /**
+   * Saves army one to a file of the Army name to the
+   * "army-templates/" folder in the directory.
+   *
+   * @param actionEvent event handler
+   */
   @FXML
   protected void saveArmyOneToFile(ActionEvent actionEvent) {
     if (saveConfirmationAlert(armyOne)) {
@@ -177,6 +237,12 @@ public class MainPageController {
     }
   }
 
+  /**
+   * Saves army two to a file of the Army name to the
+   * "army-templates/" folder in the directory.
+   *
+   * @param actionEvent event handler
+   */
   @FXML
   protected void saveArmyTwoToFile(ActionEvent actionEvent) {
     if (saveConfirmationAlert(armyTwo)) {
@@ -188,6 +254,35 @@ public class MainPageController {
     }
   }
 
+  /**
+   * Clears army one of all units.
+   *
+   * @param actionEvent event handler
+   */
+  @FXML
+  protected void clearArmyOneButton(ActionEvent actionEvent) {
+    armyOne.getAllUnits().clear();
+    placeHolderArmyOneFile = saveTempFile(armyOne);
+    updateArmyListView(armyOneListView, armyOne);
+  }
+
+  /**
+   * Clears army two of all units.
+   *
+   * @param actionEvent event handler
+   */
+  @FXML
+  protected void clearArmyTwoButton(ActionEvent actionEvent) {
+    armyTwo.getAllUnits().clear();
+    placeHolderArmyTwoFile = saveTempFile(armyTwo);
+    updateArmyListView(armyTwoListView, armyTwo);
+  }
+
+  /**
+   * Changes terrain of the battle from selected menu-item.
+   *
+   * @param actionEvent event handler
+   */
   @FXML
   protected void changeTerrain(ActionEvent actionEvent) {
     String id = actionEvent.toString();
@@ -206,16 +301,16 @@ public class MainPageController {
 
   /**
    * Loads an army of units from a text file.
-   * TODO: Duplicate code
    *
-   * @param currentArmy    Army where units will be added.
-   * @param viewUnitButton view-unit-button to enable after army is loaded.
-   * @param saveButton     save-army-button to enable after army is loaded.
-   * @param fileText       Text to print which file has been loaded.
-   * @param armyNameText   Text to print which army has been loaded.
+   * @param currentArmy     Army where units will be added.
+   * @param viewUnitButton  view-unit-button to enable after army is loaded.
+   * @param saveButton      save-army-button to enable after army is loaded.
+   * @param clearArmyButton clear-army to enable after army is loaded.
+   * @param fileText        Text to print which file has been loaded.
+   * @param armyNameText    Text to print which army has been loaded.
    */
   private void loadArmyButton(String currentArmy, Button viewUnitButton, Button saveButton,
-                              Text fileText, TextField armyNameText) {
+                              Button clearArmyButton, Text fileText, TextField armyNameText) {
     FileChooser fileChooser = new FileChooser();
     Stage fileStage = new Stage();
     File armyFile = fileChooser.showOpenDialog(fileStage);
@@ -224,18 +319,23 @@ public class MainPageController {
       if (currentArmy.equals("armyOne")) {
         armyOne = Army.uploadArmyFromFile(armyFile.toString());
         placeHolderArmyOneFile = armyFile;
+
         fileText.setText("Loaded: " + armyFile.getName());
         armyNameText.setText(armyOne.getName());
+
         updateArmyListView(armyOneListView, armyOne);
       } else {
         armyTwo = Army.uploadArmyFromFile(armyFile.toString());
         placeHolderArmyTwoFile = armyFile;
+
         fileText.setText("Loaded: " + armyFile.getName());
         armyNameText.setText(armyTwo.getName());
+
         updateArmyListView(armyTwoListView, armyTwo);
       }
       viewUnitButton.setDisable(false);
       saveButton.setDisable(false);
+      clearArmyButton.setDisable(false);
     } else {
       fileText.setText("Loaded: No file found");
     }
@@ -244,14 +344,17 @@ public class MainPageController {
   /**
    * Presents user with a Dialog Pane to add units to an army.
    *
-   * @param army           army to add units to
-   * @param listView       list view to present units with
-   * @param viewArmyButton button to view info about units in army
-   * @param saveArmyButton button to save army
-   * @param armyNumber     army number
+   * @param army            army to add units to
+   * @param listView        list view to present units with
+   * @param viewArmyButton  button to view info about units in army
+   * @param saveArmyButton  button to save army
+   * @param clearArmyButton button to clear army
+   * @param armyNameText    text-field to display army name
+   * @param armyNumber      army number
    */
   private Army addUnits(
-      Army army, ListView<String> listView, Button viewArmyButton, Button saveArmyButton, TextField armyNameText, int armyNumber
+      Army army, ListView<String> listView, Button viewArmyButton, Button saveArmyButton,
+      Button clearArmyButton, TextField armyNameText, int armyNumber
   ) {
     AddUnitDialog addUnitDialog = new AddUnitDialog();
     Optional<List<Unit>> result = addUnitDialog.showAndWait();
@@ -268,6 +371,7 @@ public class MainPageController {
         armyNameText.setText(army.getName());
         viewArmyButton.setDisable(false);
         saveArmyButton.setDisable(false);
+        clearArmyButton.setDisable(false);
       }
     }
 
@@ -375,9 +479,26 @@ public class MainPageController {
   }
 
   /**
+   * Creates a file containing an army in the temp/ folder.
+   *
+   * @param army Army to save
+   * @return a new file if successfully saved, null if not
+   */
+  private File saveTempFile(Army army) {
+    File placeHolderFile = null;
+
+    if (Army.saveArmyToFile(army.getName() + "-temp", army, "army-templates/temp/")) {
+      placeHolderFile = new File("army-templates/temp/" + army.getName() + "-temp.csv");
+    }
+
+    return placeHolderFile;
+  }
+
+  /**
    * Deletes all files in a folder.
    *
    * @param folder folder to delete
+   * @return true if file files are deleted, false if not
    */
   public static boolean deleteFolder(File folder) {
     boolean deleteSuccess = false;

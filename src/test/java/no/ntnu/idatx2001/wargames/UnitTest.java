@@ -113,14 +113,14 @@ public class UnitTest {
   @Test
   public void testCavalryResistanceBonusInForest() {
     RangedUnit rangedUnit = new RangedUnit("Archer", 100);
+    rangedUnit.setTerrain("FOREST");
     CavalryUnit cavalryUnit = new CavalryUnit("Cavalry", 100);
+    cavalryUnit.setTerrain("FOREST");
 
     Army armyOne = new Army("Test Attackers");
     armyOne.add(rangedUnit);
     Army armyTwo = new Army("Test Defenders");
     armyTwo.add(cavalryUnit);
-
-    Battle battle = new Battle(armyOne, armyTwo, "FOREST");
 
     // Ranged attack: 15 + 3 - 2 = 16
     // Cavalry defence: 12 + 1 - 1 = 12

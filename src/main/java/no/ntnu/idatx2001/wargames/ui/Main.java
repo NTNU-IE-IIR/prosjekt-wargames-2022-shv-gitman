@@ -44,7 +44,7 @@ public class Main extends Application {
       root = FXMLLoader.load(Objects.requireNonNull(getClass().getResource("gui/gui.fxml")));
 
       primaryStage.setTitle("Wargames");
-      primaryStage.setScene(new Scene(root, 800, 600));
+      primaryStage.setScene(new Scene(root, 800, 650));
       primaryStage.show();
 
     } catch (IOException e) {
