@@ -373,4 +373,23 @@ public class MainPageController {
     alert.setContentText("There was an error when saving the army.");
     alert.showAndWait();
   }
+
+  /**
+   * Deletes all files in a folder.
+   *
+   * @param folder folder to delete
+   */
+  public static boolean deleteFolder(File folder) {
+    boolean deleteSuccess = false;
+
+    File[] files = folder.listFiles();
+    if (files != null) {
+      for (File f : files) {
+        f.delete();
+      }
+      deleteSuccess = true;
+    }
+
+    return deleteSuccess;
+  }
 }

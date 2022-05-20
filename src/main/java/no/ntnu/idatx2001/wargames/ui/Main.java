@@ -67,25 +67,7 @@ public class Main extends Application {
       event.consume();
     } else {
       // Deletes temp army files when application is closed.
-      deleteTempFolder(new File("army-templates/temp/"));
+      MainPageController.deleteFolder(new File("army-templates/temp/"));
     }
   };
-
-  /**
-   * Deletes all temporary army-files.
-   *
-   * @param folder temp folder
-   */
-  public void deleteTempFolder(File folder) {
-    File[] files = folder.listFiles();
-    if (files != null) {
-      for (File f : files) {
-        if (f.delete()) {
-          System.out.println(f.getName() + " deleted");
-        }
-      }
-    } else {
-      System.out.println("null");
-    }
-  }
 }
