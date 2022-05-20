@@ -55,7 +55,7 @@ public class ArmyTest {
 
   @Test
   public void testOrcArmyCreationFromFile() {
-    Army army = Army.uploadArmyFromFile("army-templates/orc-army.csv");
+    Army army = Army.uploadArmyFromFile("army-templates/Orc Army.csv");
 
     assertEquals(50, army.getAmountOfUnits());
     assertTrue(army.hasUnits());
@@ -63,7 +63,7 @@ public class ArmyTest {
 
   @Test
   public void testHumanArmyCreationFromFile() {
-    Army army = Army.uploadArmyFromFile("army-templates/human-army.csv");
+    Army army = Army.uploadArmyFromFile("army-templates/Human army.csv");
 
     assertEquals(50, army.getAmountOfUnits());
     assertTrue(army.hasUnits());
@@ -117,7 +117,7 @@ public class ArmyTest {
     List<Unit> artilleryUnits = new UnitFactory().createUnitBattalion("ArtilleryUnit", 10, "Scorpion", 40);
     army.addAll(artilleryUnits);
 
-    assertTrue(Army.saveArmyToFile("test", army));
+    assertTrue(Army.saveArmyToFile("Test army", army, "army-templates/"));
     assertEquals(41, army.getAmountOfUnits());
   }
 }

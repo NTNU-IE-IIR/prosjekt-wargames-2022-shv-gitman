@@ -3,11 +3,7 @@
   -fx-background-color: transparent;
   -fx-text-fill: #1f1f23;
   -fx-fill: #1f1f23;
-  -fx-font-size: 14px;
-}
-
-.border-pane {
-  -fx-background-color: #be1b1b;
+  -fx-font-size: 15px;
 }
 
 .button {
@@ -45,7 +41,7 @@
   -fx-background-color: #5d8ead;
 }
 
-.list-view, .text-area {
+.list-view, .text-area, .text-field, .menu-button {
   -fx-border-width: 2px;
   -fx-border-color: #1f1f23;
 }

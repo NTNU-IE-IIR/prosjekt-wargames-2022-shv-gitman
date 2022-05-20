@@ -37,16 +37,6 @@ public class Army {
   }
 
   /**
-   * Creates a clone of an army.
-   *
-   * @param army army to clone
-   */
-  public Army(Army army) {
-    this.armyName = army.armyName;
-    this.units = army.units;
-  }
-
-  /**
    * Copies army values from another Army.
    *
    * @param army Army to copy
@@ -240,14 +230,17 @@ public class Army {
 
   /**
    * Saves an army from to .csv file.
+   * "army-templates/"
    *
    * @param filename name of file
+   * @param army army to save
+   * @param dir directory to save, starting from parent directory
    * @return saveStatus, true if successfully saved army to a file, false if not.
    */
-  public static boolean saveArmyToFile(String filename, Army army) {
+  public static boolean saveArmyToFile(String filename, Army army, String dir) {
     boolean saveStatus = false;
     try {
-      FileWriter file = new FileWriter(new File("army-templates/", filename + ".csv"));
+      FileWriter file = new FileWriter(new File(dir, filename + ".csv"));
 
       file.write(army.getName() + "\n");
 
@@ -288,11 +281,12 @@ public class Army {
    *
    * @return a string representing the whole army.
    */
+  /*
   @Override
   public String toString() {
     return "name='" + armyName + '\''
         + ", units=" + getAmountOfUnits();
-  }
+  }*/
 
   /**
    * Checks if the army is the same as another army.
@@ -301,6 +295,7 @@ public class Army {
    * @param o the object to be checked if it is the same as this army.
    * @return true if the object is the same as this army, false if not.
    */
+  /*
   @Override
   public boolean equals(Object o) {
     if (this == o) {
@@ -311,7 +306,7 @@ public class Army {
     }
     Army army = (Army) o;
     return Objects.equals(armyName, army.armyName) && Objects.equals(units, army.units);
-  }
+  }*/
 
   /**
    * Returns a hash value of the Army object.

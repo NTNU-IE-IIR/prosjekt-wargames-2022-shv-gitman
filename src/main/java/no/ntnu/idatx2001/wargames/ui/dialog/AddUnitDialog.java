@@ -100,6 +100,14 @@ public class AddUnitDialog extends Dialog<List<Unit>> {
     ));
   }
 
+  private void addUnitErrorAlert() {
+    Alert alert = new Alert(Alert.AlertType.INFORMATION);
+    alert.setTitle("ERROR");
+    alert.setHeaderText("There was an error when adding an unit!");
+    alert.setContentText("Make sure you fill out all input fields when adding units!");
+    alert.showAndWait();
+  }
+
   /**
    * Defines the list of units to be returned.
    */
@@ -108,14 +116,21 @@ public class AddUnitDialog extends Dialog<List<Unit>> {
         (ButtonType button) -> {
           List<Unit> result = null;
           if (button == ButtonType.OK) {
-            this.unitType = unitTypeCB.getValue().replace(" ","");
-            this.unitName = unitNameTextField.getText();
-            this.unitAmount = Integer.parseInt(unitAmountTextField.getText());
-            this.unitHealth = Integer.parseInt(unitHealthTextField.getText());
+            if (unitTypeCB.getValue() != null
+                && !unitNameTextField.getText().equals("")
+                && !unitAmountTextField.getText().equals("")
+                && !unitHealthTextField.getText().equals("")) {
+              this.unitType = unitTypeCB.getValue().replace(" ", "");
+              this.unitName = unitNameTextField.getText();
+              this.unitAmount = Integer.parseInt(unitAmountTextField.getText());
+              this.unitHealth = Integer.parseInt(unitHealthTextField.getText());
 
-            result = new UnitFactory().createUnitBattalion(
-                unitType, unitAmount, unitName, unitHealth
-            );
+              result = new UnitFactory().createUnitBattalion(
+                  unitType, unitAmount, unitName, unitHealth
+              );
+            } else {
+              addUnitErrorAlert();
+            }
           }
           return result;
         }
