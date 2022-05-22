@@ -71,7 +71,7 @@ public class ViewArmyDialog extends Dialog<Army> {
 
       getDialogPane().getButtonTypes().addAll(ButtonType.CANCEL);
 
-      setTitle("View Army: " + currentArmy.getName());
+      setTitle("View Army: " + this.currentArmy.getName());
 
       setMenuItems();
 
@@ -85,7 +85,7 @@ public class ViewArmyDialog extends Dialog<Army> {
    * Fills the ComboBox with Unit-types.
    */
   private void setMenuItems() {
-    this.unitTypeCB.setItems(FXCollections.observableArrayList(
+    unitTypeCB.setItems(FXCollections.observableArrayList(
         "Commander Unit",
         "Infantry Unit",
         "Ranged Unit",
@@ -106,27 +106,27 @@ public class ViewArmyDialog extends Dialog<Army> {
     if (unitTypeCB.getValue().equals("Commander Unit")
         && !(currentArmy.getCommanderUnits().isEmpty())) {
       unitTableView.setItems(
-          getObservableList(currentArmy, currentArmy.getCommanderUnits().get(0))
+          getObservableList(this.currentArmy, this.currentArmy.getCommanderUnits().get(0))
       );
     } else if (unitTypeCB.getValue().equals("Infantry Unit")
         && !(currentArmy.getInfantryUnits().isEmpty())) {
       unitTableView.setItems(
-          getObservableList(currentArmy, currentArmy.getInfantryUnits().get(0))
+          getObservableList(this.currentArmy, this.currentArmy.getInfantryUnits().get(0))
       );
     } else if (unitTypeCB.getValue().equals("Ranged Unit")
         && !(currentArmy.getRangedUnits().isEmpty())) {
       unitTableView.setItems(
-          getObservableList(currentArmy, currentArmy.getRangedUnits().get(0))
+          getObservableList(this.currentArmy, this.currentArmy.getRangedUnits().get(0))
       );
     } else if (unitTypeCB.getValue().equals("Cavalry Unit")
         && !(currentArmy.getCavalryUnits().isEmpty())) {
       unitTableView.setItems(
-          getObservableList(currentArmy, currentArmy.getCavalryUnits().get(0))
+          getObservableList(this.currentArmy, this.currentArmy.getCavalryUnits().get(0))
       );
     } else if (unitTypeCB.getValue().equals("Artillery Unit")
         && !(currentArmy.getArtilleryUnits().isEmpty())) {
       unitTableView.setItems(
-          getObservableList(currentArmy, currentArmy.getArtilleryUnits().get(0))
+          getObservableList(this.currentArmy, this.currentArmy.getArtilleryUnits().get(0))
       );
     }
   }
@@ -142,6 +142,7 @@ public class ViewArmyDialog extends Dialog<Army> {
     return MainPageController.getUnits(army, unit);
   }
 
+  // TODO: Useless?
   private void defineReturnData() {
     setResultConverter(
         (ButtonType button) -> null

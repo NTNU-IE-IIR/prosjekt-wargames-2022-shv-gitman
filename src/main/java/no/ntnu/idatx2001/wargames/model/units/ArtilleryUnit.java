@@ -64,7 +64,7 @@ public class ArtilleryUnit extends Unit {
    */
   @Override
   public int getPlainsModifier() {
-    return 4;
+    return 12;
   }
 
   /**

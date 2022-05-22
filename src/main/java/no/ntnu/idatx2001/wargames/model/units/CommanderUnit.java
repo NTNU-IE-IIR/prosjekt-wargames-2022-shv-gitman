@@ -24,6 +24,6 @@ public class CommanderUnit extends CavalryUnit {
    * @param health The health of the commander unit.
    */
   public CommanderUnit(String name, int health) {
-    super(name, health, 25, 14);
+    super(name, health, 25, 15);
   }
 }
