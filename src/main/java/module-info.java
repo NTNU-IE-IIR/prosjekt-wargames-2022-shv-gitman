@@ -1,4 +1,4 @@
-module JavaFX.Events {
+module no.ntnu.idatx2001.wargames {
   requires javafx.graphics;
   requires javafx.controls;
   requires javafx.fxml;

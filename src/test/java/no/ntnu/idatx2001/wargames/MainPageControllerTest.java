@@ -18,6 +18,6 @@ public class MainPageControllerTest {
     army.addAll(unitFactory.createUnitBattalion("InfantryUnit", 20, "Footman", 100));
 
     Army.saveArmyToFile(army.getName(), army, "army-templates/temp/");
-    assertTrue(MainPageController.deleteFolder(new File("army-templates/temp/")));
+    assertTrue(MainPageController.deleteFolderContent(new File("army-templates/temp/")));
   }
 }
