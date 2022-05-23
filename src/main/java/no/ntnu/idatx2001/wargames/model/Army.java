@@ -73,7 +73,7 @@ public class Army {
    * @return true if the army has units, false if not.
    */
   public boolean hasUnits() {
-    return !this.units.isEmpty();
+    return !units.isEmpty();
   }
 
   /**
@@ -90,7 +90,7 @@ public class Army {
    * of attack- and defence turns.
    */
   public void printAllUnits() {
-    this.units.forEach(unit -> System.out.println("  " + unit.getName()
+    units.forEach(unit -> System.out.println("  " + unit.getName()
         + " - " + unit.getHealth()
         + " hp. Attacked: " + unit.getUnitAttackTurn()
         + " times, defended " + unit.getUnitDefenceTurn() + " times."));
@@ -102,7 +102,7 @@ public class Army {
    * @return a random unit from the army.
    */
   public Unit getRandom() {
-    return this.units.get(random.nextInt(this.units.size()));
+    return units.get(random.nextInt(units.size()));
   }
 
   /**
@@ -124,7 +124,7 @@ public class Army {
    * @return a list of infantry units in the army.
    */
   public List<Unit> getInfantryUnits() {
-    return this.units.stream()
+    return units.stream()
         .filter(InfantryUnit.class::isInstance)
         .toList();
 
@@ -136,7 +136,7 @@ public class Army {
    * @return a list of cavalry units in the army.
    */
   public List<Unit> getCavalryUnits() {
-    return this.units.stream()
+    return units.stream()
         .filter(CavalryUnit.class::isInstance)
         .filter(unit -> !(unit instanceof CommanderUnit))
         .toList();
@@ -148,7 +148,7 @@ public class Army {
    * @return a list of ranged units in the army.
    */
   public List<Unit> getRangedUnits() {
-    return this.units.stream()
+    return units.stream()
         .filter(RangedUnit.class::isInstance)
         .toList();
   }
@@ -159,7 +159,7 @@ public class Army {
    * @return a list of commander units in the army.
    */
   public List<Unit> getCommanderUnits() {
-    return this.units.stream()
+    return units.stream()
         .filter(CommanderUnit.class::isInstance)
         .toList();
   }
@@ -170,7 +170,7 @@ public class Army {
    * @return a list of artillery units in the army.
    */
   public List<Unit> getArtilleryUnits() {
-    return this.units.stream()
+    return units.stream()
         .filter(ArtilleryUnit.class::isInstance)
         .toList();
   }
@@ -253,7 +253,7 @@ public class Army {
    * @return name of Army
    */
   public String getName() {
-    return this.armyName;
+    return armyName;
   }
 
   /**
@@ -293,7 +293,7 @@ public class Army {
       return false;
     }
     Army army = (Army) o;
-    return Objects.equals(this.armyName, army.armyName) && Objects.equals(this.units, army.units);
+    return Objects.equals(armyName, army.armyName) && Objects.equals(units, army.units);
   }
 
   /**

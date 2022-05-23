@@ -33,19 +33,19 @@ public class Battle {
     int turn = 0;
 
     // Changes attacker each turn
-    while (this.armyOne.hasUnits() && this.armyTwo.hasUnits()) {
+    while (armyOne.hasUnits() && armyTwo.hasUnits()) {
       if (turn % 2 == 0) {
-        simulateOneTurn(this.armyOne, this.armyTwo);
+        simulateOneTurn(armyOne, armyTwo);
       } else {
-        simulateOneTurn(this.armyTwo, this.armyOne);
+        simulateOneTurn(armyTwo, armyOne);
       }
       turn++;
     }
 
-    if (this.armyTwo.hasUnits()) {
-      return this.armyTwo;
+    if (armyTwo.hasUnits()) {
+      return armyTwo;
     } else {
-      return this.armyOne;
+      return armyOne;
     }
   }
 
@@ -76,10 +76,10 @@ public class Battle {
    */
   public void setTerrain(String terrain) {
     this.terrain = terrain;
-    for (Unit unit : this.armyOne.getAllUnits()) {
+    for (Unit unit : armyOne.getAllUnits()) {
       unit.setTerrain(terrain);
     }
-    for (Unit unit : this.armyTwo.getAllUnits()) {
+    for (Unit unit : armyTwo.getAllUnits()) {
       unit.setTerrain(terrain);
     }
   }
@@ -101,7 +101,7 @@ public class Battle {
    * @return the terrain for the battle.
    */
   public String getTerrain() {
-    return this.terrain;
+    return terrain;
   }
 
   /**
@@ -111,6 +111,6 @@ public class Battle {
    */
   @Override
   public String toString() {
-    return "Battle{" + "armyOne=" + this.armyOne + ", armyTwo=" + this.armyTwo + '}';
+    return "Battle{" + "armyOne=" + armyOne + ", armyTwo=" + armyTwo + '}';
   }
 }

@@ -45,26 +45,26 @@ public abstract class Unit {
     int resistBonus = opponent.getResistBonus();
 
     // Gives additional attack-modifiers.
-    if (this instanceof InfantryUnit && this.terrain.equals("FOREST")) {
+    if (this instanceof InfantryUnit && terrain.equals("FOREST")) {
       attackBonus = attackBonus + this.getForestModifier();
     } else if (this instanceof RangedUnit) {
-      if (this.terrain.equals("HILL")) {
+      if (terrain.equals("HILL")) {
         attackBonus = attackBonus + this.getHillModifier();
-      } else if (this.terrain.equals("FOREST")) {
+      } else if (terrain.equals("FOREST")) {
         attackBonus = attackBonus + this.getForestModifier();
       }
     } else if (this instanceof CavalryUnit) {
-      if (this.unitAttackTurn == 0) {
+      if (unitAttackTurn == 0) {
         attackBonus = attackBonus + 4;
       }
       if (terrain.equals("PLAINS")) {
         attackBonus = attackBonus + this.getPlainsModifier();
       }
     } else if (this instanceof ArtilleryUnit) {
-      if (this.unitAttackTurn == 0) {
+      if (unitAttackTurn == 0) {
         attackBonus = attackBonus + 26;
       }
-      if (this.terrain.equals("PLAINS")) {
+      if (terrain.equals("PLAINS")) {
         attackBonus = attackBonus + this.getPlainsModifier();
       }
     }
@@ -76,7 +76,7 @@ public abstract class Unit {
       } else if (opponent.getUnitDefenceTurn() == 1) {
         resistBonus = resistBonus + 2;
       }
-      if (this.terrain.equals("HILL")) {
+      if (terrain.equals("HILL")) {
         resistBonus = resistBonus + opponent.getHillModifier();
       }
     } else if (opponent instanceof InfantryUnit && terrain.equals("FOREST")) {
@@ -109,7 +109,7 @@ public abstract class Unit {
    * @return the name of the unit.
    */
   public String getName() {
-    return this.name;
+    return name;
   }
 
   /**
@@ -118,7 +118,7 @@ public abstract class Unit {
    * @return the health of the unit.
    */
   public int getHealth() {
-    return this.health;
+    return health;
   }
 
   /**
@@ -127,7 +127,7 @@ public abstract class Unit {
    * @return the attack of the unit.
    */
   public int getAttack() {
-    return this.attack;
+    return attack;
   }
 
   /**
@@ -136,7 +136,7 @@ public abstract class Unit {
    * @return the armor of the unit.
    */
   public int getArmor() {
-    return this.armor;
+    return armor;
   }
 
   /**
@@ -163,7 +163,7 @@ public abstract class Unit {
    * @return terrain unit is on
    */
   public String getTerrain() {
-    return this.terrain;
+    return terrain;
   }
 
   /**
@@ -174,8 +174,8 @@ public abstract class Unit {
    */
   @Override
   public String toString() {
-    return "Unit: " + "name = " + this.name + ", health = " + this.health
-        + ", attack = " + this.attack + ", armor = " + this.armor;
+    return "Unit: " + "name = " + name + ", health = " + health
+        + ", attack = " + attack + ", armor = " + armor;
   }
 
   /**
@@ -219,7 +219,7 @@ public abstract class Unit {
    * @return the amount of times a unit has attacked.
    */
   public int getUnitAttackTurn() {
-    return this.unitAttackTurn;
+    return unitAttackTurn;
   }
 
   /**
@@ -228,20 +228,20 @@ public abstract class Unit {
    * @return the amount of times a unit has defended.
    */
   public int getUnitDefenceTurn() {
-    return this.unitDefenceTurn;
+    return unitDefenceTurn;
   }
 
   /**
    * Increases the amount of times a unit has attacked.
    */
   public void increaseUnitAttackTurn() {
-    this.unitAttackTurn++;
+    unitAttackTurn++;
   }
 
   /**
    * Increases the amount of times a unit has defended.
    */
   public void increaseUnitDefenceTurn() {
-    this.unitDefenceTurn++;
+    unitDefenceTurn++;
   }
 }

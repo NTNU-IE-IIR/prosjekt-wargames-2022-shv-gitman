@@ -88,7 +88,7 @@ public class AddUnitDialog extends Dialog<List<Unit>> {
    * Fills the ComboBox with Unit-types.
    */
   private void setMenuItems() {
-    unitTypeCB.setItems(FXCollections.observableArrayList(
+    this.unitTypeCB.setItems(FXCollections.observableArrayList(
         "Commander Unit",
         "Infantry Unit",
         "Ranged Unit",
@@ -123,7 +123,7 @@ public class AddUnitDialog extends Dialog<List<Unit>> {
               this.unitHealth = Integer.parseInt(unitHealthTextField.getText());
 
               result = new UnitFactory().createUnitBattalion(
-                      this.unitType, this.unitAmount, this.unitName, this.unitHealth
+                  unitType, unitAmount, unitName, unitHealth
               );
             } else {
               addUnitErrorAlert();

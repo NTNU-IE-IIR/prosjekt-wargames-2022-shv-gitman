@@ -61,7 +61,7 @@
             <children>
                 <GridPane alignment="CENTER" maxWidth="220.0" minWidth="200.0" GridPane.halignment="CENTER" GridPane.rowIndex="1" GridPane.valignment="CENTER">
                     <columnConstraints>
-                        <ColumnConstraints hgrow="SOMETIMES" maxWidth="220.0" prefWidth="220.0" />
+                        <ColumnConstraints hgrow="SOMETIMES" />
                     </columnConstraints>
                     <rowConstraints>
                         <RowConstraints maxHeight="50.0" prefHeight="50.0" vgrow="SOMETIMES" />
@@ -143,7 +143,7 @@
                         </MenuButton>
                         <Text strokeType="OUTSIDE" strokeWidth="0.0" text="&lt;-- Type to change army name --&gt;" GridPane.halignment="CENTER" GridPane.rowIndex="2" GridPane.valignment="CENTER" />
                         <Button fx:id="restartSimulationButton" disable="true" mnemonicParsing="false" onAction="#restartSimulation" text="Restart sim" GridPane.halignment="CENTER" GridPane.rowIndex="1" GridPane.valignment="CENTER" />
-                        <TextArea fx:id="battleFieldTextArea" editable="false" text="winner" wrapText="true" GridPane.halignment="CENTER" GridPane.rowIndex="3" GridPane.valignment="CENTER">
+                        <TextArea fx:id="battleFieldTextArea" editable="false" text="winner" GridPane.halignment="CENTER" GridPane.rowIndex="3" GridPane.valignment="CENTER">
                             <GridPane.margin>
                                 <Insets left="5.0" right="5.0" />
                             </GridPane.margin>
@@ -255,7 +255,7 @@
                 </GridPane>
                 <GridPane alignment="CENTER" maxWidth="220.0" minWidth="200.0" GridPane.columnIndex="2" GridPane.halignment="CENTER" GridPane.rowIndex="1" GridPane.valignment="CENTER">
                     <columnConstraints>
-                        <ColumnConstraints hgrow="SOMETIMES" maxWidth="220.0" prefWidth="220.0" />
+                        <ColumnConstraints hgrow="SOMETIMES" prefWidth="120.0" />
                     </columnConstraints>
                     <rowConstraints>
                         <RowConstraints maxHeight="50.0" prefHeight="50.0" vgrow="SOMETIMES" />

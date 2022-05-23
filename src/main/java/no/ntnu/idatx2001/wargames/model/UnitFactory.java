@@ -50,7 +50,7 @@ public class UnitFactory {
    * @return a Commander unit with 40 health
    */
   public Unit createCommanderUnit() {
-    return new CommanderUnit("Commander", 1200);
+    return new CommanderUnit("Commander", 40);
   }
 
   /**
@@ -59,7 +59,7 @@ public class UnitFactory {
    * @return a Cavalry unit with 20 health
    */
   public Unit createCavalryUnit() {
-    return new CavalryUnit("Cavalry", 100);
+    return new CavalryUnit("Cavalry", 20);
   }
 
   /**
@@ -68,7 +68,7 @@ public class UnitFactory {
    * @return an Infantry unit with 20 health
    */
   public Unit createInfantryUnit() {
-    return new InfantryUnit("Infantry", 100);
+    return new InfantryUnit("Infantry", 20);
   }
 
   /**
@@ -77,7 +77,7 @@ public class UnitFactory {
    * @return a Ranged unit with 20 health
    */
   public Unit createRangedUnit() {
-    return new RangedUnit("Ranged", 100);
+    return new RangedUnit("Ranged", 20);
   }
 
   /**
@@ -86,6 +86,6 @@ public class UnitFactory {
    * @return a Artillery unit with 20 health
    */
   public Unit createArtilleryUnit() {
-    return new ArtilleryUnit("Artillery", 100);
+    return new ArtilleryUnit("Artillery", 20);
   }
 }

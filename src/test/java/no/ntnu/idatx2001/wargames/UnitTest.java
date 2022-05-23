@@ -49,7 +49,7 @@ public class UnitTest {
     CommanderUnit commanderUnit = new CommanderUnit("Commander", 180);
 
     assertEquals(25, commanderUnit.getAttack());
-    assertEquals(15, commanderUnit.getArmor());
+    assertEquals(14, commanderUnit.getArmor());
   }
 
   @Test

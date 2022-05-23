@@ -61,7 +61,7 @@ public class Main extends Application {
     );
     closeWindowAlert.setHeaderText("Confirm exit");
     closeWindowAlert.initModality(Modality.APPLICATION_MODAL);
-    closeWindowAlert.initOwner(this.primaryStage);
+    closeWindowAlert.initOwner(primaryStage);
 
     Optional<ButtonType> closeResponse = closeWindowAlert.showAndWait();
 
