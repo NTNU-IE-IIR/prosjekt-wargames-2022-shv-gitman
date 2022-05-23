@@ -1,6 +1,7 @@
 package no.ntnu.idatx2001.wargames.ui;
 
 import java.io.File;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 import javafx.collections.FXCollections;
@@ -13,6 +14,7 @@ import javafx.stage.FileChooser;
 import javafx.stage.Stage;
 import no.ntnu.idatx2001.wargames.model.Army;
 import no.ntnu.idatx2001.wargames.model.Battle;
+import no.ntnu.idatx2001.wargames.model.UnitFactory;
 import no.ntnu.idatx2001.wargames.model.units.*;
 import no.ntnu.idatx2001.wargames.ui.dialog.AddUnitDialog;
 import no.ntnu.idatx2001.wargames.ui.dialog.ViewArmyDialog;
@@ -29,8 +31,12 @@ public class MainPageController {
   private File placeHolderArmyOneFile;
   private File placeHolderArmyTwoFile;
 
+  private static final String FOREST = "FOREST";
+  private static final String HILL = "HILL";
+  private static final String PLAINS = "PLAINS";
+
   // Sets default terrain to forest.
-  private String terrain = "FOREST";
+  private String terrain = FOREST;
 
   @FXML
   private Text fileOneText;
@@ -62,6 +68,16 @@ public class MainPageController {
   private Button clearArmyOneButton;
   @FXML
   private Button clearArmyTwoButton;
+  @FXML
+  private Text textCommanderMod;
+  @FXML
+  private Text textInfantryMod;
+  @FXML
+  private Text textRangedMod;
+  @FXML
+  private Text textCavalryMod;
+  @FXML
+  private Text textArtilleryMod;
 
   /**
    * Adds a listener to the army-name TextFields at application initialization to
@@ -73,7 +89,10 @@ public class MainPageController {
         -> armyOne.setArmyName(newValue));
     armyTwoNameTextField.textProperty().addListener((observable, oldValue, newValue)
         -> armyTwo.setArmyName(newValue));
+    updateBonusTable(FOREST);
   }
+
+
 
   /**
    * Starts a battle between armyOne and armyTwo and presents the
@@ -106,7 +125,7 @@ public class MainPageController {
       restartSimulationButton.setDisable(false);
     } else {
       battleFieldTextArea.setText(
-          "Make sure both armies have\nunits & you have selected\na battlefield."
+          "Make sure both armies have units\n& you have selected a battlefield."
       );
     }
   }
@@ -285,14 +304,17 @@ public class MainPageController {
     String id = actionEvent.toString();
 
     if (id.contains("FORESTmenuItem")) {
-      this.terrain = "FOREST";
-      terrainTextField.setText("Terrain: FOREST");
+      this.terrain = FOREST;
+      terrainTextField.setText(FOREST);
+      updateBonusTable(FOREST);
     } else if (id.contains("HILLmenuItem")) {
-      this.terrain = "HILL";
-      terrainTextField.setText("Terrain: HILL");
+      this.terrain = HILL;
+      terrainTextField.setText(HILL);
+      updateBonusTable(HILL);
     } else if (id.contains("PLAINSmenuItem")) {
-      this.terrain = "PLAINS";
-      terrainTextField.setText("Terrain: PLAINS");
+      this.terrain = PLAINS;
+      terrainTextField.setText(PLAINS);
+      updateBonusTable(PLAINS);
     }
   }
 
@@ -494,10 +516,10 @@ public class MainPageController {
   /**
    * Deletes all files in a folder.
    *
-   * @param folder folder to delete
+   * @param folder folder to delete files in
    * @return true if file files are deleted, false if not
    */
-  public static boolean deleteFolder(File folder) {
+  public static boolean deleteFolderContent(File folder) {
     boolean deleteSuccess = false;
 
     File[] files = folder.listFiles();
@@ -509,5 +531,47 @@ public class MainPageController {
     }
 
     return deleteSuccess;
+  }
+
+  /**
+   * Updates the modifier table with values for the different units
+   * depending on chosen terrain.
+   *
+   * @param terrain chosesn terrain to display modifier of
+   */
+  private void updateBonusTable(String terrain) {
+    UnitFactory unitFactory = new UnitFactory();
+
+    CommanderUnit dummyCommander = (CommanderUnit) unitFactory.createCommanderUnit();
+    InfantryUnit dummyInfantry = (InfantryUnit) unitFactory.createInfantryUnit();
+    RangedUnit dummyRanged  = (RangedUnit) unitFactory.createRangedUnit();
+    CavalryUnit dummyCavalry  = (CavalryUnit) unitFactory.createCavalryUnit();
+    ArtilleryUnit dummyArtillery  = (ArtilleryUnit) unitFactory.createArtilleryUnit();
+
+    List<Unit> units = new ArrayList<>();
+    units.add(dummyCommander);
+    units.add(dummyInfantry);
+    units.add(dummyRanged);
+    units.add(dummyCavalry);
+    units.add(dummyArtillery);
+
+    List<Text> bonusTexts = new ArrayList<>();
+    bonusTexts.add(textCommanderMod);
+    bonusTexts.add(textInfantryMod);
+    bonusTexts.add(textRangedMod);
+    bonusTexts.add(textCavalryMod);
+    bonusTexts.add(textArtilleryMod);
+
+    for (int i = 0; i < bonusTexts.size(); i++) {
+      Text currentText = bonusTexts.get(i);
+      Unit currentUnit = units.get(i);
+
+      switch (terrain) {
+        case FOREST -> currentText.setText("" + currentUnit.getForestModifier());
+        case HILL -> currentText.setText("" + currentUnit.getHillModifier());
+        case PLAINS -> currentText.setText("" + currentUnit.getPlainsModifier());
+        default -> currentText.setText("0");
+      }
+    }
   }
 }
