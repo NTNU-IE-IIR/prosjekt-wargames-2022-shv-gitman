@@ -1,5 +1,5 @@
-Test Army
-CommanderUnit,King,180
+Test army
+CommanderUnit,King,140
 InfantryUnit,Footman,100
 InfantryUnit,Footman,100
 InfantryUnit,Footman,100
@@ -30,13 +30,13 @@ CavalryUnit,Knight,100
 CavalryUnit,Knight,100
 CavalryUnit,Knight,100
 CavalryUnit,Knight,100
-ArtilleryUnit,Scorpion,50
-ArtilleryUnit,Scorpion,50
-ArtilleryUnit,Scorpion,50
-ArtilleryUnit,Scorpion,50
-ArtilleryUnit,Scorpion,50
-ArtilleryUnit,Scorpion,50
-ArtilleryUnit,Scorpion,50
-ArtilleryUnit,Scorpion,50
-ArtilleryUnit,Scorpion,50
-ArtilleryUnit,Scorpion,50
+ArtilleryUnit,Scorpion,40
+ArtilleryUnit,Scorpion,40
+ArtilleryUnit,Scorpion,40
+ArtilleryUnit,Scorpion,40
+ArtilleryUnit,Scorpion,40
+ArtilleryUnit,Scorpion,40
+ArtilleryUnit,Scorpion,40
+ArtilleryUnit,Scorpion,40
+ArtilleryUnit,Scorpion,40
+ArtilleryUnit,Scorpion,40
