@@ -38,6 +38,8 @@ public class MainPageController {
   // Sets default terrain to forest.
   private String terrain = FOREST;
 
+  private String armyTemplateDir = "army-templates/";
+
   @FXML
   private Text fileOneText;
   @FXML
@@ -245,7 +247,8 @@ public class MainPageController {
   @FXML
   protected void saveArmyOneToFile(ActionEvent actionEvent) {
     if (saveConfirmationAlert(armyOne)) {
-      if (Army.saveArmyToFile(armyOne.getName(), armyOne, "army-templates/")) {
+      checkArmyTemplateDir();
+      if (Army.saveArmyToFile(armyOne.getName(), armyOne, armyTemplateDir)) {
         saveSuccessAlert(armyOne);
       } else {
         saveErrorAlert();
@@ -262,7 +265,8 @@ public class MainPageController {
   @FXML
   protected void saveArmyTwoToFile(ActionEvent actionEvent) {
     if (saveConfirmationAlert(armyTwo)) {
-      if (Army.saveArmyToFile(armyTwo.getName(), armyTwo, "army-templates/")) {
+      checkArmyTemplateDir();
+      if (Army.saveArmyToFile(armyTwo.getName(), armyTwo, armyTemplateDir)) {
         saveSuccessAlert(armyTwo);
       } else {
         saveErrorAlert();
@@ -505,12 +509,31 @@ public class MainPageController {
    */
   private File saveTempFile(Army army) {
     File placeHolderFile = null;
+    String tempFolder = "army-templates/temp/";
 
-    if (Army.saveArmyToFile(army.getName() + "-temp", army, "army-templates/temp/")) {
-      placeHolderFile = new File("army-templates/temp/" + army.getName() + "-temp.csv");
+    checkArmyTemplateDir();
+
+    // creates temp directory if it doesn't exist.
+    File tempDirectory = new File(tempFolder);
+    if (!tempDirectory.exists()) {
+      tempDirectory.mkdir();
+    }
+
+    if (Army.saveArmyToFile(army.getName() + "-temp", army, tempFolder)) {
+      placeHolderFile = new File(tempFolder + army.getName() + "-temp.csv");
     }
 
     return placeHolderFile;
+  }
+
+  /**
+   * Creates army-templates directory if it doesn't exist.
+   */
+  private void checkArmyTemplateDir() {
+    File armyTemplateDirectory = new File(armyTemplateDir);
+    if (!armyTemplateDirectory.exists()) {
+      armyTemplateDirectory.mkdir();
+    }
   }
 
   /**
