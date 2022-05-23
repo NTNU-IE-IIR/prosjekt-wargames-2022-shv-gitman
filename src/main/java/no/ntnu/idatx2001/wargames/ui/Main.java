@@ -50,7 +50,6 @@ public class Main extends Application {
     }
   }
 
-
   /**
    * Presents the user with a confirmation alert when the user press the exit button.
    * If the user confirms exit, all temp files are deleted.
@@ -61,7 +60,7 @@ public class Main extends Application {
     );
     closeWindowAlert.setHeaderText("Confirm exit");
     closeWindowAlert.initModality(Modality.APPLICATION_MODAL);
-    closeWindowAlert.initOwner(this.primaryStage);
+    closeWindowAlert.initOwner(primaryStage);
 
     Optional<ButtonType> closeResponse = closeWindowAlert.showAndWait();
 
@@ -70,7 +69,7 @@ public class Main extends Application {
       event.consume();
     } else {
       // Deletes temp army files when application is closed.
-      MainPageController.deleteFolderContent(new File("army-templates/temp/"));
+      MainPageController.deleteFolder(new File("army-templates/temp/"));
     }
   };
 }
