@@ -61,7 +61,7 @@
             <children>
                 <GridPane alignment="CENTER" maxWidth="220.0" minWidth="200.0" GridPane.halignment="CENTER" GridPane.rowIndex="1" GridPane.valignment="CENTER">
                     <columnConstraints>
-                        <ColumnConstraints hgrow="SOMETIMES" />
+                        <ColumnConstraints hgrow="SOMETIMES" maxWidth="220.0" />
                     </columnConstraints>
                     <rowConstraints>
                         <RowConstraints maxHeight="50.0" prefHeight="50.0" vgrow="SOMETIMES" />
@@ -77,7 +77,7 @@
                     <children>
                         <Text fx:id="fileOneText" strokeType="OUTSIDE" strokeWidth="0.0" text="Loaded:" GridPane.rowIndex="1" GridPane.valignment="CENTER">
                             <GridPane.margin>
-                                <Insets left="20.0" />
+                                <Insets left="10.0" />
                             </GridPane.margin>
                         </Text>
                         <Button mnemonicParsing="false" onAction="#loadArmyOne" text="Load army 1" GridPane.halignment="CENTER" GridPane.valignment="CENTER">
@@ -97,7 +97,7 @@
                         </Button>
                         <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Name:" GridPane.rowIndex="2">
                             <GridPane.margin>
-                                <Insets left="20.0" />
+                                <Insets left="10.0" />
                             </GridPane.margin>
                         </Text>
                         <Button mnemonicParsing="false" onAction="#addArmyOneUnit" text="Add units" GridPane.halignment="CENTER" GridPane.rowIndex="4" GridPane.valignment="CENTER" />
@@ -107,7 +107,7 @@
                                 <Insets />
                             </opaqueInsets>
                             <GridPane.margin>
-                                <Insets left="80.0" right="5.0" top="2.0" />
+                                <Insets left="70.0" right="5.0" top="2.0" />
                             </GridPane.margin>
                         </TextField>
                   <Button fx:id="clearArmyOneButton" disable="true" mnemonicParsing="false" onAction="#clearArmyOneButton" text="Clear Army 1" GridPane.halignment="CENTER" GridPane.rowIndex="7" GridPane.valignment="CENTER" />
@@ -118,7 +118,7 @@
                 </GridPane>
                 <GridPane alignment="CENTER" GridPane.columnIndex="1" GridPane.rowIndex="1">
                     <columnConstraints>
-                        <ColumnConstraints hgrow="SOMETIMES" prefWidth="240.0" />
+                        <ColumnConstraints hgrow="SOMETIMES" />
                     </columnConstraints>
                     <rowConstraints>
                         <RowConstraints maxHeight="50.0" prefHeight="50.0" vgrow="SOMETIMES" />
@@ -255,7 +255,7 @@
                 </GridPane>
                 <GridPane alignment="CENTER" maxWidth="220.0" minWidth="200.0" GridPane.columnIndex="2" GridPane.halignment="CENTER" GridPane.rowIndex="1" GridPane.valignment="CENTER">
                     <columnConstraints>
-                        <ColumnConstraints hgrow="SOMETIMES" prefWidth="120.0" />
+                        <ColumnConstraints hgrow="SOMETIMES" maxWidth="220.0" />
                     </columnConstraints>
                     <rowConstraints>
                         <RowConstraints maxHeight="50.0" prefHeight="50.0" vgrow="SOMETIMES" />
