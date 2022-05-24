@@ -38,7 +38,7 @@ public class MainPageController {
   // Sets default terrain to forest.
   private String terrain = FOREST;
 
-  private String armyTemplateDir = "army-templates/";
+  private final String armyTemplateDir = "army-templates/";
 
   @FXML
   private Text fileOneText;
@@ -70,16 +70,6 @@ public class MainPageController {
   private Button clearArmyOneButton;
   @FXML
   private Button clearArmyTwoButton;
-  @FXML
-  private Text textCommanderMod;
-  @FXML
-  private Text textInfantryMod;
-  @FXML
-  private Text textRangedMod;
-  @FXML
-  private Text textCavalryMod;
-  @FXML
-  private Text textArtilleryMod;
 
   /**
    * Adds a listener to the army-name TextFields at application initialization to
@@ -91,7 +81,6 @@ public class MainPageController {
         -> armyOne.setArmyName(newValue));
     armyTwoNameTextField.textProperty().addListener((observable, oldValue, newValue)
         -> armyTwo.setArmyName(newValue));
-    updateBonusTable(FOREST);
   }
 
 
@@ -310,15 +299,12 @@ public class MainPageController {
     if (id.contains("FORESTmenuItem")) {
       this.terrain = FOREST;
       terrainTextField.setText(FOREST);
-      updateBonusTable(FOREST);
     } else if (id.contains("HILLmenuItem")) {
       this.terrain = HILL;
       terrainTextField.setText(HILL);
-      updateBonusTable(HILL);
     } else if (id.contains("PLAINSmenuItem")) {
       this.terrain = PLAINS;
       terrainTextField.setText(PLAINS);
-      updateBonusTable(PLAINS);
     }
   }
 
@@ -554,47 +540,5 @@ public class MainPageController {
     }
 
     return deleteSuccess;
-  }
-
-  /**
-   * Updates the modifier table with values for the different units
-   * depending on chosen terrain.
-   *
-   * @param terrain chosesn terrain to display modifier of
-   */
-  private void updateBonusTable(String terrain) {
-    UnitFactory unitFactory = new UnitFactory();
-
-    CommanderUnit dummyCommander = (CommanderUnit) unitFactory.createCommanderUnit();
-    InfantryUnit dummyInfantry = (InfantryUnit) unitFactory.createInfantryUnit();
-    RangedUnit dummyRanged  = (RangedUnit) unitFactory.createRangedUnit();
-    CavalryUnit dummyCavalry  = (CavalryUnit) unitFactory.createCavalryUnit();
-    ArtilleryUnit dummyArtillery  = (ArtilleryUnit) unitFactory.createArtilleryUnit();
-
-    List<Unit> units = new ArrayList<>();
-    units.add(dummyCommander);
-    units.add(dummyInfantry);
-    units.add(dummyRanged);
-    units.add(dummyCavalry);
-    units.add(dummyArtillery);
-
-    List<Text> bonusTexts = new ArrayList<>();
-    bonusTexts.add(textCommanderMod);
-    bonusTexts.add(textInfantryMod);
-    bonusTexts.add(textRangedMod);
-    bonusTexts.add(textCavalryMod);
-    bonusTexts.add(textArtilleryMod);
-
-    for (int i = 0; i < bonusTexts.size(); i++) {
-      Text currentText = bonusTexts.get(i);
-      Unit currentUnit = units.get(i);
-
-      switch (terrain) {
-        case FOREST -> currentText.setText("" + currentUnit.getForestModifier());
-        case HILL -> currentText.setText("" + currentUnit.getHillModifier());
-        case PLAINS -> currentText.setText("" + currentUnit.getPlainsModifier());
-        default -> currentText.setText("0");
-      }
-    }
   }
 }

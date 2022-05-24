@@ -1,6 +1,8 @@
 package no.ntnu.idatx2001.wargames.ui.dialog;
 
 import java.io.IOException;
+import java.util.Objects;
+
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
@@ -66,7 +68,7 @@ public class ViewArmyDialog extends Dialog<Army> {
 
       DialogPane dialogPane = loader.load();
       getDialogPane().getStylesheets().add(
-          getClass().getResource("dialogStyle.css").toExternalForm()
+          Objects.requireNonNull(getClass().getResource("dialogStyle.css")).toExternalForm()
       );
 
       getDialogPane().getButtonTypes().addAll(ButtonType.CANCEL);

@@ -6,8 +6,8 @@ import no.ntnu.idatx2001.wargames.model.units.Unit;
  * A simulation of a battle between two armies.
  */
 public class Battle {
-  private Army armyOne;
-  private Army armyTwo;
+  private final Army armyOne;
+  private final Army armyTwo;
   private String terrain;
 
   /**
@@ -82,17 +82,6 @@ public class Battle {
     for (Unit unit : armyTwo.getAllUnits()) {
       unit.setTerrain(terrain);
     }
-  }
-
-  /**
-   * Switches sides of the armies.
-   *
-   * @param armOne  army one
-   * @param armyTwo army two
-   */
-  public void switchSides(Army armOne, Army armyTwo) {
-    this.armyOne = armOne;
-    this.armyTwo = armyTwo;
   }
 
   /**

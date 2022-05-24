@@ -1,4 +1,4 @@
-package no.ntnu.idatx2001.wargames;
+package no.ntnu.idatx2001.wargames.model.units;
 
 import no.ntnu.idatx2001.wargames.model.Army;
 import no.ntnu.idatx2001.wargames.model.Battle;
@@ -12,45 +12,9 @@ import static org.junit.Assert.*;
 
 public class UnitTest {
 
-  @Test
-  public void testInfantryUnitCreation() {
-    InfantryUnit infantryUnit = new InfantryUnit("Infantry", 100, 25, 15);
 
-    assertEquals("Infantry", infantryUnit.getName());
-    assertEquals(100, infantryUnit.getHealth());
-    assertEquals(25, infantryUnit.getAttack());
-    assertEquals(15, infantryUnit.getArmor());
-    assertEquals(2, infantryUnit.getAttackBonus());
-    assertEquals(1, infantryUnit.getResistBonus());
-  }
 
-  @Test
-  public void testPredefinedInfantryUnitCreation() {
-    InfantryUnit infantryUnit = new InfantryUnit("Infantry", 100);
 
-    assertEquals(15, infantryUnit.getAttack());
-    assertEquals(10, infantryUnit.getArmor());
-  }
-
-  @Test
-  public void testCommanderUnitCreation() {
-    CommanderUnit commanderUnit = new CommanderUnit("Commander", 180, 50, 20);
-
-    assertEquals("Commander", commanderUnit.getName());
-    assertEquals(180, commanderUnit.getHealth());
-    assertEquals(50, commanderUnit.getAttack());
-    assertEquals(20, commanderUnit.getArmor());
-    assertEquals(2, commanderUnit.getAttackBonus());
-    assertEquals(1, commanderUnit.getResistBonus());
-  }
-
-  @Test
-  public void testPredefinedCommanderUnitCreation() {
-    CommanderUnit commanderUnit = new CommanderUnit("Commander", 180);
-
-    assertEquals(25, commanderUnit.getAttack());
-    assertEquals(14, commanderUnit.getArmor());
-  }
 
   @Test
   public void testFirstAttackCavalryInfantry() {
@@ -85,7 +49,7 @@ public class UnitTest {
   }
 
   @Test
-  public void testRangedUnitResistanceBonus() {
+  public void testUnitResistanceBonus() {
     InfantryUnit infantryUnit = new InfantryUnit("Infantry", 100);
     RangedUnit rangedUnit = new RangedUnit("Archer", 100);
 
@@ -111,7 +75,7 @@ public class UnitTest {
   }
 
   @Test
-  public void testCavalryResistanceBonusInForest() {
+  public void testUnitResistanceBonusInForest() {
     RangedUnit rangedUnit = new RangedUnit("Archer", 100);
     rangedUnit.setTerrain("FOREST");
     CavalryUnit cavalryUnit = new CavalryUnit("Cavalry", 100);
@@ -128,5 +92,28 @@ public class UnitTest {
     rangedUnit.attack(cavalryUnit);
 
     assertEquals(96, cavalryUnit.getHealth());
+  }
+
+  @Test
+  public void testUnitGetTerrain() {
+    Unit unit = new CommanderUnit("Cavalry", 100);
+    unit.setTerrain("FOREST");
+
+    assertEquals("FOREST", unit.getTerrain());
+  }
+
+  @Test
+  public void testUnitHillModifier() {
+    Unit unit1 = new ArtilleryUnit("Artillery", 100);
+    unit1.setTerrain("HILL");
+    Unit unit2 = new ArtilleryUnit("Artillery", 100);
+    unit2.setTerrain("HILL");
+
+    // Artillery-1 attack: (base) 3 + (attack-bonus) 4 + (first-attack-bonus) 26 + (hill modifier) -2
+    // Artillery-2 defence: (base) 8 + (resist-bonus) 1 + (hill modifier) -2
+    // Expected health:
+    unit1.attack(unit2);
+
+    assertEquals(76, unit2.getHealth());
   }
 }

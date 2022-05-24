@@ -1,4 +1,4 @@
-package no.ntnu.idatx2001.wargames;
+package no.ntnu.idatx2001.wargames.model;
 
 import no.ntnu.idatx2001.wargames.model.Army;
 import no.ntnu.idatx2001.wargames.model.UnitFactory;
@@ -58,7 +58,6 @@ public class ArmyTest {
     Army army = Army.uploadArmyFromFile("army-templates/Orc Army.csv");
 
     assertEquals(50, army.getAmountOfUnits());
-    assertTrue(army.hasUnits());
   }
 
   @Test
@@ -66,7 +65,6 @@ public class ArmyTest {
     Army army = Army.uploadArmyFromFile("army-templates/Human army.csv");
 
     assertEquals(50, army.getAmountOfUnits());
-    assertTrue(army.hasUnits());
   }
 
   @Test
@@ -87,20 +85,6 @@ public class ArmyTest {
   @Test
   public void testSaveArmyToFileWithUnitFactory() {
     Army army = new Army("Test army");
-
-//    army.add(new CommanderUnit("Mountain King", 180));
-//
-//    for (int i = 1; i <= 10; i++) {
-//      army.add(new InfantryUnit("Footman", 100));
-//    }
-//
-//    for (int i = 1; i <= 10; i++) {
-//      army.add(new RangedUnit("Archer", 100));
-//    }
-//
-//    for (int i = 1; i <= 10; i++) {
-//      army.add(new CavalryUnit("Cavalry", 100));
-//    }
 
     Unit commanderUnit = new UnitFactory().createUnit("CommanderUnit", "King", 140);
     army.add(commanderUnit);

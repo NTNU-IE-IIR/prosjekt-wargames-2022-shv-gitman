@@ -1,4 +1,4 @@
-package no.ntnu.idatx2001.wargames;
+package no.ntnu.idatx2001.wargames.model;
 
 import org.junit.Test;
 import no.ntnu.idatx2001.wargames.model.Army;
@@ -49,5 +49,15 @@ public class BattleTest {
     } else {
       assertEquals(winner, humanArmy);
     }
+  }
+
+  @Test
+  public void testBattleGetTerrain() {
+    Army orcArmy = Army.uploadArmyFromFile("army-templates/Orc Army.csv");
+    Army humanArmy = Army.uploadArmyFromFile("army-templates/Human army.csv");
+
+    Battle battle = new Battle(orcArmy, humanArmy, "PLAINS");
+
+    assertEquals("PLAINS",battle.getTerrain());
   }
 }

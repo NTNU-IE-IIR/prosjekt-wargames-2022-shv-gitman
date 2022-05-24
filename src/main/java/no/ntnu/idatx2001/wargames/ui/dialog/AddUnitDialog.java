@@ -2,6 +2,8 @@ package no.ntnu.idatx2001.wargames.ui.dialog;
 
 import java.io.IOException;
 import java.util.List;
+import java.util.Objects;
+
 import javafx.collections.FXCollections;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -46,7 +48,7 @@ public class AddUnitDialog extends Dialog<List<Unit>> {
 
       DialogPane dialogPane = loader.load();
       getDialogPane().getStylesheets().add(
-          getClass().getResource("dialogStyle.css").toExternalForm()
+          Objects.requireNonNull(getClass().getResource("dialogStyle.css")).toExternalForm()
       );
 
       getDialogPane().getButtonTypes().addAll(ButtonType.OK, ButtonType.CANCEL);

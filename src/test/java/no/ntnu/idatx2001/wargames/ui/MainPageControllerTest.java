@@ -1,4 +1,4 @@
-package no.ntnu.idatx2001.wargames;
+package no.ntnu.idatx2001.wargames.ui;
 
 import no.ntnu.idatx2001.wargames.model.Army;
 import no.ntnu.idatx2001.wargames.model.UnitFactory;
