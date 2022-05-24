@@ -1,13 +1,20 @@
 package no.ntnu.idatx2001.wargames.model;
 
-import no.ntnu.idatx2001.wargames.model.Army;
-import no.ntnu.idatx2001.wargames.model.UnitFactory;
 import no.ntnu.idatx2001.wargames.model.units.*;
 import org.junit.Test;
 import java.util.List;
 import static org.junit.Assert.*;
 
 public class ArmyTest {
+
+  private UnitFactory unitFactory = new UnitFactory();
+
+  @Test
+  public void testArmyCreation() {
+    Army army = new Army("Test army");
+
+    assertEquals("Test army", army.getName());
+  }
 
   @Test
   public void testRemoveUnitFromArmy() {
@@ -28,6 +35,23 @@ public class ArmyTest {
     army.add(infantryUnit);
 
     assertTrue(army.hasUnits());
+  }
+
+  @Test
+  public void testAddAllUnitsToArmy() {
+    Army testArmy = new Army("Test Army");
+    List<Unit> testUnits = unitFactory.createUnitBattalion("InfantryUnit", 100, "Footman", 100);
+
+    testArmy.addAll(testUnits);
+    assertEquals(testUnits.size(), testArmy.getAllUnits().size());
+  }
+
+  @Test
+  public void testGetRandom() {
+    Army testArmy = new Army("Test Army");
+    testArmy.add(unitFactory.createCavalryUnit());
+    testArmy.add(unitFactory.createInfantryUnit());
+    assertNotNull(testArmy.getRandom());
   }
 
   @Test
@@ -71,8 +95,6 @@ public class ArmyTest {
   public void testUnitFactoryWithSingletonMethod() {
     Army army = new Army("Test army");
 
-    UnitFactory unitFactory = new UnitFactory();
-
     army.add(unitFactory.createCommanderUnit());
     army.add(unitFactory.createInfantryUnit());
     army.add(unitFactory.createRangedUnit());
@@ -103,5 +125,26 @@ public class ArmyTest {
 
     assertTrue(Army.saveArmyToFile("Test army", army, "army-templates/"));
     assertEquals(41, army.getAmountOfUnits());
+  }
+
+  @Test
+  public void testArmyHashCode() {
+    Army army1 = new Army("army1");
+    Army army2 = new Army("army2");
+    Army army3 = army1;
+
+    assertEquals(army1.hashCode(), army3.hashCode());
+    assertNotEquals(army2.hashCode(), army3.hashCode());
+  }
+
+  @Test
+  public void testArmyEquals() {
+    Army army1 = new Army("army1");
+    Army army2 = new Army("army2");
+    Army army3 = army1;
+
+    assertTrue(army3.equals(army1));
+    assertTrue(army1.equals(army3));
+    assertFalse(army2.equals(army1));
   }
 }

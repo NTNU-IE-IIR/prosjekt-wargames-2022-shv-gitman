@@ -303,6 +303,6 @@ public class Army {
    */
   @Override
   public int hashCode() {
-    return Objects.hash(this);
+    return armyName.hashCode() * units.hashCode();
   }
 }
