@@ -1,6 +1,10 @@
 package no.ntnu.idatx2001.wargames.model;
 
-import java.io.*;
+import java.io.BufferedReader;
+import java.io.File;
+import java.io.FileReader;
+import java.io.FileWriter;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
@@ -36,7 +40,7 @@ public class Army {
   }
 
   /**
-   * Adds an unit to the army.
+   * Adds a unit to the army.
    *
    * @param unit the unit to be added.
    */

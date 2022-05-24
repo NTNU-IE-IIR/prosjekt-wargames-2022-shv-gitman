@@ -51,29 +51,26 @@ public abstract class Unit {
 
     // Gives additional attack-modifiers.
     // InfantryUnit gets bonus when attacking in FOREST
-    if (this instanceof InfantryUnit) {
-      attackBonus = applyModifier(this, attackBonus);
-    }
-
+    //
     // RangedUnit gets a positive modifier when attacking in a HILL
     // and a negative modifier when attacking in a FOREST
-    else if (this instanceof RangedUnit) {
-      attackBonus = applyModifier(this, attackBonus);
-    }
-
+    //
     // CavalryUnit & CommanderUnit gets a bonus when attacking in PLAINS.
-    else if (this instanceof CavalryUnit) {
+    //
+    // ArtilleryUnit get a positive bonus when attacking in PLAINS
+    // and a negative modifier when attacking in a FOREST
+    if (this instanceof InfantryUnit) {
+      attackBonus = applyModifier(this, attackBonus);
+    } else if (this instanceof RangedUnit) {
+      attackBonus = applyModifier(this, attackBonus);
+    } else if (this instanceof CavalryUnit) {
       if (unitAttackTurn == 0) {
         attackBonus = attackBonus + 4;
       }
       if (this.getTerrain().equals(HILL)) {
         attackBonus = applyModifier(this, attackBonus);
       }
-    }
-
-    // ArtilleryUnit get a positive bonus when attacking in PLAINS
-    // and a negative modifier when attacking in a FOREST
-    else if (this instanceof ArtilleryUnit) {
+    } else if (this instanceof ArtilleryUnit) {
       if (unitAttackTurn == 0) {
         attackBonus = attackBonus + 26;
       }
@@ -84,28 +81,25 @@ public abstract class Unit {
 
     // Gives additional defence-modifiers.
     // InfantryUnit gets bonus when defending from in FOREST
-    else if (opponent instanceof InfantryUnit) {
-      resistBonus = applyModifier(opponent, resistBonus);
-    }
-
+    //
     // RangedUnit gets an additional +4 bonus at first attack
     // and a +2 bonus at second attack
-    if (opponent instanceof RangedUnit) {
+    //
+    // When CavalryUnit gets attacked in a FOREST, all resistance bonus is removed.
+    //
+    // ArtilleryUnit doesn't take damage at first defence.
+    // ArtilleryUnit gets a negative modifier when defending in a HILL
+    if (opponent instanceof InfantryUnit) {
+      resistBonus = applyModifier(opponent, resistBonus);
+    } else if (opponent instanceof RangedUnit) {
       if (opponent.getUnitDefenceTurn() == 0) {
         resistBonus = resistBonus + 4;
       } else if (opponent.getUnitDefenceTurn() == 1) {
         resistBonus = resistBonus + 2;
       }
-    }
-
-    // When CavalryUnit gets attacked in a FOREST, all resistance bonus is removed.
-    else if (opponent instanceof CavalryUnit && terrain.equals(FOREST)) {
+    } else if (opponent instanceof CavalryUnit && terrain.equals(FOREST)) {
       resistBonus = 0;
-    }
-
-    // ArtilleryUnit doesn't take damage at first defence.
-    // ArtilleryUnit gets a negative modifier when defending in a HILL
-    else if (opponent instanceof ArtilleryUnit) {
+    } else if (opponent instanceof ArtilleryUnit) {
       if (opponent.getUnitDefenceTurn() == 0) {
         resistBonus = resistBonus + attackBonus + this.attack;
       }

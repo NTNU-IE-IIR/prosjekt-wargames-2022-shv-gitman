@@ -58,7 +58,7 @@ public class ArtilleryUnit extends Unit {
   }
 
   /**
-   * Returns the plains modifier.
+   * Returns the plains' modifier.
    *
    * @return plains modifier
    */

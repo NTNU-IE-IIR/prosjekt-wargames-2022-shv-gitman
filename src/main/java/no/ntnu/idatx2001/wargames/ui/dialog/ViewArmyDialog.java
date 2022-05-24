@@ -2,13 +2,17 @@ package no.ntnu.idatx2001.wargames.ui.dialog;
 
 import java.io.IOException;
 import java.util.Objects;
-
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
-import javafx.scene.control.*;
+import javafx.scene.control.ButtonType;
+import javafx.scene.control.ComboBox;
+import javafx.scene.control.Dialog;
+import javafx.scene.control.DialogPane;
+import javafx.scene.control.TableColumn;
+import javafx.scene.control.TableView;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.text.Text;
 import no.ntnu.idatx2001.wargames.model.Army;
@@ -66,17 +70,16 @@ public class ViewArmyDialog extends Dialog<Army> {
       loader.setLocation(getClass().getResource("viewArmyDialogPane.fxml"));
       loader.setController(this);
 
-      DialogPane dialogPane = loader.load();
       getDialogPane().getStylesheets().add(
           Objects.requireNonNull(getClass().getResource("dialogStyle.css")).toExternalForm()
       );
-
       getDialogPane().getButtonTypes().addAll(ButtonType.CANCEL);
 
       setTitle("View Army: " + currentArmy.getName());
 
       setMenuItems();
 
+      DialogPane dialogPane = loader.load();
       getDialogPane().setContent(dialogPane);
     } catch (IOException e) {
       System.out.println("ERROR: " + e.getMessage());

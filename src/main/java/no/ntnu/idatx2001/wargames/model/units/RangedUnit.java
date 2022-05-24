@@ -60,7 +60,7 @@ public class RangedUnit extends Unit {
   }
 
   /**
-   * Returns the plains modifier.
+   * Returns the plains' modifier.
    *
    * @return plains modifier
    */

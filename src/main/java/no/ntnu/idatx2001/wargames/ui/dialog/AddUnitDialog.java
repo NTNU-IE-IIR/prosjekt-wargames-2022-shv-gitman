@@ -3,11 +3,15 @@ package no.ntnu.idatx2001.wargames.ui.dialog;
 import java.io.IOException;
 import java.util.List;
 import java.util.Objects;
-
 import javafx.collections.FXCollections;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
-import javafx.scene.control.*;
+import javafx.scene.control.Alert;
+import javafx.scene.control.ButtonType;
+import javafx.scene.control.ComboBox;
+import javafx.scene.control.Dialog;
+import javafx.scene.control.DialogPane;
+import javafx.scene.control.TextField;
 import no.ntnu.idatx2001.wargames.model.UnitFactory;
 import no.ntnu.idatx2001.wargames.model.units.*;
 
@@ -46,11 +50,9 @@ public class AddUnitDialog extends Dialog<List<Unit>> {
       loader.setLocation(getClass().getResource("addUnitDialogPane.fxml"));
       loader.setController(this);
 
-      DialogPane dialogPane = loader.load();
       getDialogPane().getStylesheets().add(
           Objects.requireNonNull(getClass().getResource("dialogStyle.css")).toExternalForm()
       );
-
       getDialogPane().getButtonTypes().addAll(ButtonType.OK, ButtonType.CANCEL);
 
       setTitle("Add Units");
@@ -61,6 +63,7 @@ public class AddUnitDialog extends Dialog<List<Unit>> {
       setIntegerOnly(unitAmountTextField);
       setIntegerOnly(unitHealthTextField);
 
+      DialogPane dialogPane = loader.load();
       getDialogPane().setContent(dialogPane);
     } catch (IOException e) {
       System.out.println("ERROR: " + e.getMessage());

@@ -81,9 +81,9 @@ public class UnitFactory {
   }
 
   /**
-   * Creates a Artillery unit with 20 health.
+   * Creates an Artillery unit with 20 health.
    *
-   * @return a Artillery unit with 20 health
+   * @return an Artillery unit with 20 health
    */
   public Unit createArtilleryUnit() {
     return new ArtilleryUnit("Artillery", 20);
